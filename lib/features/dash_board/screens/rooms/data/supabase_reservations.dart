@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_egypt_v3/core/models/reservation_model.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/rooms/data/supabase_rooms.dart';
 
 class SupabaseReservations {
   static final supabase = Supabase.instance.client;
@@ -17,6 +18,8 @@ class SupabaseReservations {
         print("Reservation with this number already exists");
         return false;
       }
+
+      await SupabaseRooms.incrementReservationNum(rev.room);
 
       // Insert new reservation
       final response = await supabase.from("room_reservation").insert({

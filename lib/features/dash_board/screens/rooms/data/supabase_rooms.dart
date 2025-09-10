@@ -48,6 +48,32 @@ class SupabaseRooms {
     }
   }
 
+  static Future<bool> incrementReservationNum(String name) async {
+    try {
+      // 1. Get current reservation_num
+      final room = await supabase
+          .from("rooms")
+          .select("reservation_num")
+          .eq("name", name)
+          .maybeSingle();
+
+      if (room == null) return false;
+
+      final currentNum = room["reservation_num"] as int? ?? 0;
+
+      // 2. Update with +1
+      await supabase
+          .from("rooms")
+          .update({'reservation_num': currentNum + 1})
+          .eq("name", name);
+
+      return true;
+    } catch (e) {
+      print("Increment reservation_num error: $e");
+      return false;
+    }
+  }
+
   /// Delete room by name (or use id if you have one)
   static Future<bool> deleteRoom(String name) async {
     try {

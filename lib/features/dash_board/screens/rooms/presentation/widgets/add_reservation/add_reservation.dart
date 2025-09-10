@@ -116,6 +116,8 @@ class _AddReservationState extends State<AddReservation> {
               'Reservation Added Successfully',
               ToastificationType.success,
             );
+
+            context.read<RoomsCubit>().getRooms();
           } else if (state is ReservationError) {
             ModernToast.showToast(
               context,
@@ -151,6 +153,9 @@ class _AddReservationState extends State<AddReservation> {
               );
 
               context.read<ReservationCubit>().insertRev(rev);
+
+              nameController.clear();
+              numberController.clear();
             }
           }
 
