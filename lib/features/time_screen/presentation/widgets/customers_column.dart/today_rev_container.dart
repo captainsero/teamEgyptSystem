@@ -9,7 +9,6 @@ import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
 import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/reservation_cubit.dart';
-import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/rooms_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/room_condition.dart';
 import 'package:toastification/toastification.dart';
@@ -89,7 +88,7 @@ class TodayRevContainer extends StatelessWidget {
                                         res.name,
                                         style: TextStyle(
                                           fontFamily: Fonts.head,
-                                          fontSize: 24,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Col.light2,
                                         ),

@@ -41,28 +41,5 @@ class SupabaseRoomsData {
   }
 
   /// Get all reservations for a day
-  static Future<List<ReservationModel>> getReservations(DateTime date) async {
-    try {
-      final dateOnly = DateTime(date.year, date.month, date.day);
-
-      final response = await supabase
-          .from("days-data")
-          .select("rooms_data")
-          .eq("date", dateOnly.toIso8601String())
-          .maybeSingle();
-
-      if (response == null || response["rooms_data"] == null) return [];
-
-      final List<dynamic> roomsData = response["rooms_data"];
-      return roomsData
-          .map(
-            (json) =>
-                ReservationModel.fromJson(Map<String, dynamic>.from(json)),
-          )
-          .toList();
-    } catch (e) {
-      print("Error fetching reservations: $e");
-      return [];
-    }
-  }
+  
 }

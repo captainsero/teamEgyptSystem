@@ -6,7 +6,6 @@ import 'package:team_egypt_v3/core/models/reservation_model.dart';
 import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/data/supabase_days_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/data/supabase_partnership.dart';
-import 'package:team_egypt_v3/features/dash_board/screens/rooms/data/supabase_reservations.dart';
 import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
 import 'package:team_egypt_v3/features/time_screen/data/supabase_rooms_data.dart';
 part 'time_screen_state.dart';
@@ -73,14 +72,6 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
 
     htotal = total;
     emit(GetTotal(total: total));
-  }
-
-  // ✅ NEW: Get all rooms for a day
-  Future<void> getRooms(DateTime date) async {
-    final rooms = await SupabaseRoomsData.getReservations(date);
-    emit(
-      RoomsDataLoaded(rooms.map((r) => r.toJson()).toList()),
-    ); // keep JSON for UI
   }
 
   // ✅ Upsert room reservation
