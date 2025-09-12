@@ -6,6 +6,7 @@ import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/logic/cubit/partner_ship_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/presentation/screen/partnership_screen.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/presentation/screen/rooms.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/stuff/presentation/screen/stuff_screen.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/presentation/screen/subsciptions.dart';
 
 class ScreenSwitcher extends StatelessWidget {
@@ -39,7 +40,7 @@ class ScreenSwitcher extends StatelessWidget {
               case 5:
                 return Rooms();
               case 6:
-                return Center(child: Text("Stuff Page"));
+                return StuffScreen();
               case 7:
                 return Center(child: Text("Items Page"));
               default:
