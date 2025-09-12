@@ -37,13 +37,13 @@ class StringExtensions {
     double pricePerHour,
   ) {
     // Helper to convert TimeOfDay to DateTime
-    DateTime _toDateTime(TimeOfDay tod) {
+    DateTime toDateTime(TimeOfDay tod) {
       final now = DateTime.now();
       return DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
     }
 
-    final start = _toDateTime(from);
-    var end = _toDateTime(to);
+    final start = toDateTime(from);
+    var end = toDateTime(to);
 
     // Handle overnight case (e.g., 10:00 PM → 2:00 AM)
     if (end.isBefore(start)) {
