@@ -39,7 +39,4 @@ class SupabaseRoomsData {
       print("Error saving reservation: $e");
     }
   }
-
-  /// Get all reservations for a day
-  
 }

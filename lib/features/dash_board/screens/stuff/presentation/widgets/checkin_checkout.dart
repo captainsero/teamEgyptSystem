@@ -3,7 +3,6 @@ import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
 import 'package:team_egypt_v3/core/widgets/custom_text_field.dart';
-import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
 
 class CheckinCheckout extends StatefulWidget {
   const CheckinCheckout({super.key});
