@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
+import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
+import 'package:team_egypt_v3/core/widgets/custom_text_field.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
 
 class AddPosition extends StatefulWidget {
@@ -11,6 +13,10 @@ class AddPosition extends StatefulWidget {
 }
 
 class _AddPositionState extends State<AddPosition> {
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final numberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,9 +27,87 @@ class _AddPositionState extends State<AddPosition> {
         color: Col.dark2,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [IconAndText(text: "Add Position", icon: Icons.person_add)],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                IconAndText(text: "Add Position", icon: Icons.person_add),
+                Spacer(),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.add_circle_sharp, color: Col.light2),
+                  label: Text(
+                    "Add",
+                    style: TextStyle(
+                      color: Col.light2,
+                      fontFamily: Fonts.names,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+
+            SizedBox(
+              width: ScreenSize.width / 5.5,
+              child: CustomTextField(
+                controller: nameController,
+                hint: "Name",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Name cannot be empty";
+                  }
+                  if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
+                    return "Name must contain only letters and numbers";
+                  }
+                  return null;
+                },
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Number field
+            SizedBox(
+              width: ScreenSize.width / 5.5,
+              child: CustomTextField(
+                controller: numberController,
+                hint: "Number",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Number cannot be empty";
+                  }
+                  if (!RegExp(r'^\d{11}$').hasMatch(value)) {
+                    return "Number must be exactly 11 digits";
+                  }
+                  return null;
+                },
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: ScreenSize.width / 5.5,
+              child: CustomTextField(
+                controller: nameController,
+                hint: "Position",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Position cannot be empty";
+                  }
+                  if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
+                    return "Position must contain only letters and numbers";
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
