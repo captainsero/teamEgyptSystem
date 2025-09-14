@@ -7,6 +7,7 @@ import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_d
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/customers_table.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/date_picker_button.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/rooms_reservation_card.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/stuff_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/total_salary_card.dart';
 import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
 
@@ -80,6 +81,10 @@ class _DaysDataState extends State<DaysData> {
               const SizedBox(height: 10),
 
               RoomsReservationCard(dateFormat: dateFormat),
+
+              const SizedBox(height: 10),
+
+              StuffData(dateFormat: dateFormat),
             ],
           ),
         );
