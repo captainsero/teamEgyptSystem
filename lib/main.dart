@@ -6,6 +6,7 @@ import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_d
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/logic/cubit/partner_ship_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/reservation_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/rooms_cubit.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/stuff/logic/cubit/stuff_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/plans_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/subscription_cubit.dart';
 import 'package:team_egypt_v3/features/splash/presentation/screen/splash_screen.dart';
@@ -48,8 +49,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<ReservationCubit>(
           create: (_) => ReservationCubit()..getAllRev(),
         ),
+        BlocProvider<StuffCubit>(create: (_) => StuffCubit()..getAll()),
       ],
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(),
+      ),
     );
   }
 }

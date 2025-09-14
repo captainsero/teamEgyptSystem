@@ -7,14 +7,6 @@ final class StuffInitial extends StuffState {}
 
 class StuffLoading extends StuffState {}
 
-class StuffInsert extends StuffState {}
-
-class StuffCheckin extends StuffState {}
-
-class StuffCheckout extends StuffState {}
-
-class StuffDelete extends StuffState {}
-
 class StuffGet extends StuffState {
   final List<StuffModel> stuff;
 
@@ -25,4 +17,10 @@ class StuffError extends StuffState {
   final String message;
 
   StuffError({required this.message});
+}
+
+class StuffSuccess extends StuffState {
+  final String message;
+
+  StuffSuccess({required this.message});
 }

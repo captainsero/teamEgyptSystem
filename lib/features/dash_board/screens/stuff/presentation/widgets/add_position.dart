@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
+import 'package:team_egypt_v3/core/models/stuff_model.dart';
 import 'package:team_egypt_v3/core/widgets/custom_text_field.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
+import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/stuff/logic/cubit/stuff_cubit.dart';
+import 'package:toastification/toastification.dart';
 
 class AddPosition extends StatefulWidget {
   const AddPosition({super.key});
@@ -16,6 +21,7 @@ class _AddPositionState extends State<AddPosition> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final numberController = TextEditingController();
+  final positionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +42,49 @@ class _AddPositionState extends State<AddPosition> {
               children: [
                 IconAndText(text: "Add Position", icon: Icons.person_add),
                 Spacer(),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.add_circle_sharp, color: Col.light2),
-                  label: Text(
-                    "Add",
-                    style: TextStyle(
-                      color: Col.light2,
-                      fontFamily: Fonts.names,
-                    ),
-                  ),
+                BlocConsumer<StuffCubit, StuffState>(
+                  listener: (context, state) {
+                    if (state is StuffSuccess) {
+                      return ModernToast.showToast(
+                        context,
+                        'Success',
+                        state.message,
+                        ToastificationType.success,
+                      );
+                    } else if (state is StuffError) {
+                      ModernToast.showToast(
+                        context,
+                        'Error',
+                        state.message,
+                        ToastificationType.error,
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return TextButton.icon(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final stuff = StuffModel(
+                            name: nameController.text,
+                            number: numberController.text,
+                            position: positionController.text,
+                            checkIn: TimeOfDay.now(),
+                            checkOut: TimeOfDay.now(),
+                            isIn: false,
+                          );
+                          context.read<StuffCubit>().insert(stuff);
+                        }
+                      },
+                      icon: Icon(Icons.add_circle_sharp, color: Col.light2),
+                      label: Text(
+                        "Add",
+                        style: TextStyle(
+                          color: Col.light2,
+                          fontFamily: Fonts.names,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -93,7 +132,7 @@ class _AddPositionState extends State<AddPosition> {
             SizedBox(
               width: ScreenSize.width / 5.5,
               child: CustomTextField(
-                controller: nameController,
+                controller: positionController,
                 hint: "Position",
                 validator: (value) {
                   if (value == null || value.isEmpty) {

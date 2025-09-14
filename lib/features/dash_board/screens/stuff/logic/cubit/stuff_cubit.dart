@@ -19,7 +19,7 @@ class StuffCubit extends Cubit<StuffState> {
     final insert = await SupabaseStuff.insertPosition(stuff);
 
     if (insert) {
-      emit(StuffInsert());
+      emit(StuffSuccess(message: "Position Added Successfully"));
       getAll();
     } else {
       emit(StuffError(message: "There is a stuff with the same number"));
@@ -28,23 +28,39 @@ class StuffCubit extends Cubit<StuffState> {
 
   void checkIn(String number) async {
     emit(StuffLoading());
-    final check = await SupabaseStuff.checkIn(number);
-
-    if (check) {
-      emit(StuffCheckin());
+    final stuff = await SupabaseStuff.getStuff(number);
+    if (stuff == null) {
+      emit(StuffError(message: "There is no stuff with the number"));
     } else {
-      emit(StuffError(message: "There is no stuff with this number"));
+      if (stuff.isIn = false) {
+        final check = await SupabaseStuff.checkIn(number);
+
+        if (check) {
+          emit(StuffSuccess(message: 'CheckedIn Successfully'));
+        } else {
+          emit(StuffError(message: "There is no stuff with this number"));
+        }
+      } else {
+        emit(StuffError(message: "This stuff already in"));
+      }
     }
   }
 
   void checkOut(String number) async {
     emit(StuffLoading());
-    final check = await SupabaseStuff.checkOut(number);
-
-    if (check) {
-      emit(StuffCheckout());
+    final stuff = await SupabaseStuff.getStuff(number);
+    if (stuff == null) {
+      emit(StuffError(message: "There is no stuff with the number"));
     } else {
-      emit(StuffError(message: "There is no stuff with this number"));
+      if (stuff.isIn = true) {
+        final check = await SupabaseStuff.checkIn(number);
+
+        if (check) {
+          emit(StuffSuccess(message: 'CheckedOut Successfully'));
+        }
+      } else {
+        emit(StuffError(message: "This stuff already out"));
+      }
     }
   }
 
@@ -53,7 +69,7 @@ class StuffCubit extends Cubit<StuffState> {
     final delete = await SupabaseStuff.deleteByNumber(number);
 
     if (delete) {
-      emit(StuffDelete());
+      emit(StuffSuccess(message: "Deleted Successfully"));
     } else {
       emit(StuffError(message: "There is no stuff with this number"));
     }
