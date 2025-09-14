@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_egypt_v3/core/models/stuff_model.dart';
+import 'package:team_egypt_v3/core/utils/validators.dart';
 
 class SupabaseStuff {
   // Table reference
@@ -43,6 +44,24 @@ class SupabaseStuff {
     }
   }
 
+  static Future<StuffModel?> getStuff(String number) async {
+    try {
+      final response = await _table
+          .select()
+          .eq('number', number)
+          .maybeSingle(); // returns Map<String,dynamic>? or null
+
+      if (response == null) {
+        return null; // no staff member with this number
+      }
+
+      return StuffModel.fromJson(response);
+    } catch (e) {
+      print('Fetch stuff error: $e');
+      return null;
+    }
+  }
+
   /// Mark a staff member as checked-in and store the time
   static Future<bool> checkIn(String number) async {
     try {
@@ -60,9 +79,16 @@ class SupabaseStuff {
   /// Mark a staff member as checked-out and store the time
   static Future<bool> checkOut(String number) async {
     try {
+      final stuff = await getStuff(number);
+      if (stuff == null) {
+        return false;
+      }
+
       await _table
           .update({'check_out': TimeOfDay.now(), 'is_in': false})
           .eq('number', number);
+
+      await saveStuffData(Validators.choosenDay, stuff);
 
       return true;
     } catch (e) {
@@ -71,46 +97,33 @@ class SupabaseStuff {
     }
   }
 
-  static Future<void> saveStuffData(
-    DateTime date,
-    List<StuffModel> staff,
-  ) async {
+  static Future<void> saveStuffData(DateTime date, StuffModel stuff) async {
     try {
       final dateOnly = DateTime(date.year, date.month, date.day);
 
-      // Get the current row for this date
+      // Fetch current stuff_data for this date (if any)
       final response = await _supabase
           .from('days_data')
           .select('stuff_data')
           .eq('date', dateOnly.toIso8601String())
           .maybeSingle();
 
-      // Build a map<number, Map<String,dynamic>> for easy updates
-      final Map<String, Map<String, dynamic>> merged = {};
-
+      // Convert existing rows to a list
+      List<Map<String, dynamic>> existingStuff = [];
       if (response != null && response['stuff_data'] != null) {
-        for (final item in List<Map<String, dynamic>>.from(
-          response['stuff_data'],
-        )) {
-          merged[item['number'] as String] = item;
-        }
+        existingStuff = List<Map<String, dynamic>>.from(response['stuff_data']);
       }
 
-      // Add or replace each new staff member by number
-      for (final s in staff) {
-        merged[s.number] = s.toJson();
-      }
+      // Always add the new record
+      existingStuff.add(stuff.toJson());
 
-      // Convert back to a list
-      final List<Map<String, dynamic>> finalList = merged.values.toList();
-
-      // Update only the stuff_data column
+      // Update the row with the new array
       await _supabase
           .from('days_data')
-          .update({'stuff_data': finalList})
+          .update({'stuff_data': existingStuff})
           .eq('date', dateOnly.toIso8601String());
 
-      print('Stuff data saved/merged successfully!');
+      print('New staff data saved successfully!');
     } catch (e) {
       print('Error saving stuff data: $e');
     }
