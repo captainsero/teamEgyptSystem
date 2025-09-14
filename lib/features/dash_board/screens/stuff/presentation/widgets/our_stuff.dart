@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
+import 'package:team_egypt_v3/core/models/stuff_model.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/stuff/logic/cubit/stuff_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_cell.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_header.dart';
 
@@ -23,39 +26,50 @@ class OurStuff extends StatelessWidget {
         children: [
           IconAndText(text: "Our Stuff", icon: Icons.group_sharp),
           const SizedBox(height: 20),
-          Table(
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            columnWidths: const {
-              0: FlexColumnWidth(2),
-              1: FlexColumnWidth(2),
-              2: FlexColumnWidth(2),
-              3: FlexColumnWidth(1.5),
-            },
-            children: [
-              TableRow(
+          BlocBuilder<StuffCubit, StuffState>(
+            builder: (context, state) {
+              List<StuffModel> stuff = [];
+              if (state is StuffGet) {
+                stuff = state.stuff;
+              }
+              return Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                columnWidths: const {
+                  0: FlexColumnWidth(2),
+                  1: FlexColumnWidth(2),
+                  2: FlexColumnWidth(2),
+                  3: FlexColumnWidth(1.5),
+                },
                 children: [
-                  TableHeader("Name"),
-                  TableHeader("Number"),
-                  TableHeader("position"),
-                  Center(child: TableHeader("Actions")),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableCell1("ele.name"),
-                  TableCell1("{ele.price}"),
-                  TableCell1("{ele.reservationNum}"),
-
-                  IconButton(
-                    onPressed: () {},
-                    icon: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: const Icon(Icons.delete, color: Colors.red),
-                    ),
+                  TableRow(
+                    children: [
+                      TableHeader("Name"),
+                      TableHeader("Number"),
+                      TableHeader("position"),
+                      Center(child: TableHeader("Actions")),
+                    ],
                   ),
+                  for (var ele in stuff)
+                    TableRow(
+                      children: [
+                        TableCell1(ele.name),
+                        TableCell1(ele.number),
+                        TableCell1(ele.position),
+
+                        IconButton(
+                          onPressed: () {
+                            context.read<StuffCubit>().delete(ele.number);
+                          },
+                          icon: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: const Icon(Icons.delete, color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
-              ),
-            ],
+              );
+            },
           ),
         ],
       ),

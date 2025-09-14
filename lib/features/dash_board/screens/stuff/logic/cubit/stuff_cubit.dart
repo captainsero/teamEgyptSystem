@@ -24,11 +24,11 @@ class StuffCubit extends Cubit<StuffState> {
 
       if (insert) {
         emit(StuffSuccess(message: "Position Added Successfully"));
-        getAll();
       } else {
         emit(StuffError(message: "There is a stuff with the same number"));
       }
     }
+    getAll();
   }
 
   void checkIn(String number) async {
@@ -49,6 +49,7 @@ class StuffCubit extends Cubit<StuffState> {
         emit(StuffError(message: "This stuff already in"));
       }
     }
+    getAll();
   }
 
   void checkOut(String number) async {
@@ -67,6 +68,7 @@ class StuffCubit extends Cubit<StuffState> {
         emit(StuffError(message: "This stuff already out"));
       }
     }
+    getAll();
   }
 
   void delete(String number) async {
@@ -78,5 +80,6 @@ class StuffCubit extends Cubit<StuffState> {
     } else {
       emit(StuffError(message: "There is no stuff with this number"));
     }
+    getAll();
   }
 }
