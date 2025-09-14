@@ -16,13 +16,18 @@ class StuffCubit extends Cubit<StuffState> {
 
   void insert(StuffModel stuff) async {
     emit(StuffLoading());
-    final insert = await SupabaseStuff.insertPosition(stuff);
-
-    if (insert) {
-      emit(StuffSuccess(message: "Position Added Successfully"));
-      getAll();
-    } else {
+    final is_in = await SupabaseStuff.getStuff(stuff.number);
+    if (is_in != null) {
       emit(StuffError(message: "There is a stuff with the same number"));
+    } else {
+      final insert = await SupabaseStuff.insertPosition(stuff);
+
+      if (insert) {
+        emit(StuffSuccess(message: "Position Added Successfully"));
+        getAll();
+      } else {
+        emit(StuffError(message: "There is a stuff with the same number"));
+      }
     }
   }
 
