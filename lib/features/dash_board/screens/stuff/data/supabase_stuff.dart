@@ -65,8 +65,12 @@ class SupabaseStuff {
   /// Mark a staff member as checked-in and store the time
   static Future<bool> checkIn(String number) async {
     try {
+      final now = TimeOfDay.now();
+      final checkInValue =
+          '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+
       await _table
-          .update({'check_in': TimeOfDay.now(), 'is_in': true})
+          .update({'check_in': checkInValue, 'is_in': true})
           .eq('number', number);
 
       return true;
@@ -79,16 +83,22 @@ class SupabaseStuff {
   /// Mark a staff member as checked-out and store the time
   static Future<bool> checkOut(String number) async {
     try {
-      final stuff = await getStuff(number);
-      if (stuff == null) {
-        return false;
-      }
+      // 1. Get current time in HH:mm
+      final now = TimeOfDay.now();
+      final formatted =
+          '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
+      // 2. Update checkout time
       await _table
-          .update({'check_out': TimeOfDay.now(), 'is_in': false})
+          .update({'check_out': formatted, 'is_in': false})
           .eq('number', number);
 
-      await saveStuffData(Validators.choosenDay, stuff);
+      // 3. Re-fetch the *updated* row
+      final updatedStuff = await getStuff(number);
+      if (updatedStuff == null) return false;
+
+      // 4. Save the new data to days-data
+      await saveStuffData(Validators.choosenDay, updatedStuff);
 
       return true;
     } catch (e) {
@@ -103,7 +113,7 @@ class SupabaseStuff {
 
       // Fetch current stuff_data for this date (if any)
       final response = await _supabase
-          .from('days_data')
+          .from('days-data')
           .select('stuff_data')
           .eq('date', dateOnly.toIso8601String())
           .maybeSingle();
@@ -119,7 +129,7 @@ class SupabaseStuff {
 
       // Update the row with the new array
       await _supabase
-          .from('days_data')
+          .from('days-data')
           .update({'stuff_data': existingStuff})
           .eq('date', dateOnly.toIso8601String());
 

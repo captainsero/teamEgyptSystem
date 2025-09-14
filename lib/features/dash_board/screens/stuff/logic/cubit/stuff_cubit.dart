@@ -16,8 +16,8 @@ class StuffCubit extends Cubit<StuffState> {
 
   void insert(StuffModel stuff) async {
     emit(StuffLoading());
-    final is_in = await SupabaseStuff.getStuff(stuff.number);
-    if (is_in != null) {
+    final isIn = await SupabaseStuff.getStuff(stuff.number);
+    if (isIn != null) {
       emit(StuffError(message: "There is a stuff with the same number"));
     } else {
       final insert = await SupabaseStuff.insertPosition(stuff);
@@ -37,7 +37,7 @@ class StuffCubit extends Cubit<StuffState> {
     if (stuff == null) {
       emit(StuffError(message: "There is no stuff with the number"));
     } else {
-      if (stuff.isIn = false) {
+      if (stuff.isIn == false) {
         final check = await SupabaseStuff.checkIn(number);
 
         if (check) {
@@ -57,8 +57,8 @@ class StuffCubit extends Cubit<StuffState> {
     if (stuff == null) {
       emit(StuffError(message: "There is no stuff with the number"));
     } else {
-      if (stuff.isIn = true) {
-        final check = await SupabaseStuff.checkIn(number);
+      if (stuff.isIn == true) {
+        final check = await SupabaseStuff.checkOut(number);
 
         if (check) {
           emit(StuffSuccess(message: 'CheckedOut Successfully'));

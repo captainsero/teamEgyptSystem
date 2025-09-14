@@ -77,6 +77,10 @@ class _AddPositionState extends State<AddPosition> {
                             isIn: false,
                           );
                           context.read<StuffCubit>().insert(stuff);
+
+                          nameController.clear();
+                          numberController.clear();
+                          positionController.clear();
                         }
                       },
                       icon: Icon(Icons.add_circle_sharp, color: Col.light2),

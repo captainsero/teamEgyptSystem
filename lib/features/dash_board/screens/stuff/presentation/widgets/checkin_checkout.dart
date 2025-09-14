@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
+import 'package:team_egypt_v3/core/widgets/circular_indicator.dart';
 import 'package:team_egypt_v3/core/widgets/custom_text_field.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/stuff/logic/cubit/stuff_cubit.dart';
 
 class CheckinCheckout extends StatefulWidget {
   const CheckinCheckout({super.key});
@@ -51,38 +54,58 @@ class _CheckinCheckoutState extends State<CheckinCheckout> {
 
             const SizedBox(height: 20),
 
-            Row(
-              children: [
-                Spacer(),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.login, color: Col.light2, size: 20),
-                  label: Text(
-                    "Checkin",
-                    style: TextStyle(
-                      color: Col.light2,
-                      fontFamily: Fonts.names,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+            BlocBuilder<StuffCubit, StuffState>(
+              builder: (context, state) {
+                if (state is StuffLoading) {
+                  return CircularIndicator();
+                } else {
+                  return Row(
+                    children: [
+                      Spacer(),
+                      TextButton.icon(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<StuffCubit>().checkIn(
+                              numberController.text,
+                            );
+                          }
+                        },
+                        icon: Icon(Icons.login, color: Col.light2, size: 20),
+                        label: Text(
+                          "Checkin",
+                          style: TextStyle(
+                            color: Col.light2,
+                            fontFamily: Fonts.names,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
 
-                const SizedBox(width: 20),
+                      const SizedBox(width: 20),
 
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.logout, color: Col.light2, size: 20),
-                  label: Text(
-                    "Checkout",
-                    style: TextStyle(
-                      color: Col.light2,
-                      fontFamily: Fonts.names,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                Spacer(),
-              ],
+                      TextButton.icon(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<StuffCubit>().checkOut(
+                              numberController.text,
+                            );
+                          }
+                        },
+                        icon: Icon(Icons.logout, color: Col.light2, size: 20),
+                        label: Text(
+                          "Checkout",
+                          style: TextStyle(
+                            color: Col.light2,
+                            fontFamily: Fonts.names,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  );
+                }
+              },
             ),
           ],
         ),
