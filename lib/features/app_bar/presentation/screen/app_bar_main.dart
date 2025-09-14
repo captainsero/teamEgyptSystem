@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
+import 'package:team_egypt_v3/core/constants/images.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
 import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/features/app_bar/presentation/widgets/screens_button.dart';
@@ -29,7 +30,13 @@ class _AppBarMainState extends State<AppBarMain> {
       leadingWidth: ScreenSize.width / 3,
       leading: Row(
         children: [
-          Icon(Icons.account_circle_outlined, color: Colors.black),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundImage: AssetImage(Images.tWithoutBackground),
+            backgroundColor: Colors.transparent,
+            radius: 25,
+          ),
+          SizedBox(width: 10),
           Text(
             "Team Egypt",
             style: TextStyle(
