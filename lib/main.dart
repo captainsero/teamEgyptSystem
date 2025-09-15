@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/logic/customers_data_cubit/customers_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/dash_board.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_data_cubit/days_data_cubit.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/logic/cubit/partner_ship_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/reservation_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/rooms_cubit.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           create: (_) => ReservationCubit()..getAllRev(),
         ),
         BlocProvider<StuffCubit>(create: (_) => StuffCubit()..getAll()),
+        BlocProvider<ItemsCubit>(create: (_) => ItemsCubit()..getAll()),
       ],
       child: MaterialApp(debugShowCheckedModeBanner: false, home: DashBoard()),
     );

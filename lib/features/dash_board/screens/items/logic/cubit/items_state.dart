@@ -24,3 +24,9 @@ class ItemsGetAll extends ItemsState {
 
   ItemsGetAll({required this.items});
 }
+
+class ItemsGetOne extends ItemsState {
+  final ItemsModel item;
+
+  ItemsGetOne({required this.item});
+}
