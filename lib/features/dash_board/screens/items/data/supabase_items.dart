@@ -47,6 +47,23 @@ class SupabaseItems {
     }
   }
 
+  static Future<ItemsModel?> getByName(String name) async {
+    try {
+      final response = await _supabase.select().eq('name', name).maybeSingle();
+      if (response != null) {
+        return ItemsModel(
+          name: response['name'],
+          price: response['price'],
+          quantity: response['quantity'],
+        );
+      }
+      return null;
+    } catch (e) {
+      print("Error getting item by name: $e");
+      return null;
+    }
+  }
+
   // Delete item by name
   static Future<bool> deleteByName(String name) async {
     try {
