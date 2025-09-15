@@ -119,7 +119,7 @@ class AddRoom extends StatelessWidget {
                         if (value == null || value.isEmpty) {
                           return "Price cannot be empty";
                         }
-                        if (int.tryParse(value) == null) {
+                        if (double.tryParse(value) == null) {
                           return "Price must be a number";
                         }
                         return null;

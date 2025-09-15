@@ -9,7 +9,6 @@ class ItemsCubit extends Cubit<ItemsState> {
   ItemsCubit() : super(ItemsInitial());
 
   void getAll() async {
-    emit(ItemsLoading());
     final items = await SupabaseItems.getAll();
     if (items.isEmpty) {
       emit(ItemsError(message: "There is no items"));
@@ -35,8 +34,8 @@ class ItemsCubit extends Cubit<ItemsState> {
       emit(ItemsError(message: "There is an item with the same name"));
     } else {
       emit(ItemsSuccessfull(message: "Item added successfully"));
-      getAll();
     }
+    getAll();
   }
 
   void delete(String name) async {
@@ -46,8 +45,8 @@ class ItemsCubit extends Cubit<ItemsState> {
       emit(ItemsError(message: "Cannot Delete the item"));
     } else {
       emit(ItemsSuccessfull(message: "Item Deleted successfully"));
-      getAll();
     }
+    getAll();
   }
 
   void update(ItemsModel items) async {
@@ -55,9 +54,8 @@ class ItemsCubit extends Cubit<ItemsState> {
     final update = await SupabaseItems.updateByName(items);
     if (update == false) {
       emit(ItemsError(message: "Cannot Update the item"));
-    }else{
+    } else {
       emit(ItemsSuccessfull(message: "Item Updated successfully"));
-      getAll();
     }
   }
 }
