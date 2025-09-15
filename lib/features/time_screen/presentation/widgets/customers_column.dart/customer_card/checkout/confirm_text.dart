@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 
 class ConfirmText extends StatelessWidget {
@@ -11,6 +12,7 @@ class ConfirmText extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: priceController,
+      cursorColor: Col.dark1,
       keyboardType: TextInputType.number, // show numeric keyboard
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
@@ -30,18 +32,18 @@ class ConfirmText extends StatelessWidget {
           fontFamily: Fonts.head,
         ),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: Col.light1,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: Colors.black, width: 1.3),
+          borderSide: BorderSide(color: Col.light2, width: 1.3),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: Colors.black, width: 1.8),
+          borderSide: BorderSide(color: Col.light2, width: 1.8),
         ),
       ),
     );

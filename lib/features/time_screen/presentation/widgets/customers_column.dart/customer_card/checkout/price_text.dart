@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 
 class PriceText extends StatelessWidget {
@@ -12,7 +13,7 @@ class PriceText extends StatelessWidget {
       "Price After Offer = $total EGP",
       style: TextStyle(
         fontSize: 30,
-        color: Colors.black,
+        color: Col.light1,
         fontFamily: Fonts.tableHead,
         fontWeight: FontWeight.bold,
       ),

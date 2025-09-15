@@ -48,39 +48,65 @@ class ItemsListContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Spacer(),
-                    SizedBox(
-                      width: ScreenSize.width / 5.5,
-                      child: CustomTextField(
-                        controller: priceController,
-                        hint: "Price",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Price cannot be empty";
-                          }
-                          if (double.tryParse(value) == null) {
-                            return "Price must be a number";
-                          }
-                          return null;
-                        },
-                      ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: ScreenSize.width / 5.5,
+                          child: CustomTextField(
+                            controller: priceController,
+                            hint: "Price",
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Price cannot be empty";
+                              }
+                              if (double.tryParse(value) == null) {
+                                return "Price must be a number";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+
+                        Text(
+                          "=> Price",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Col.light1,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
 
                     Spacer(),
-                    SizedBox(
-                      width: ScreenSize.width / 5.5,
-                      child: CustomTextField(
-                        controller: quantityController,
-                        hint: "Quantity",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Quantity cannot be empty";
-                          }
-                          if (int.tryParse(value) == null) {
-                            return "Quantity must be a number";
-                          }
-                          return null;
-                        },
-                      ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: ScreenSize.width / 5.5,
+                          child: CustomTextField(
+                            controller: quantityController,
+                            hint: "Quantity",
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Quantity cannot be empty";
+                              }
+                              if (int.tryParse(value) == null) {
+                                return "Quantity must be a number";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+
+                        Text(
+                          "=> Quantity",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Col.light1,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                     Spacer(),
                   ],

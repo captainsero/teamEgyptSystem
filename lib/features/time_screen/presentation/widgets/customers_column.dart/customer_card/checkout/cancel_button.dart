@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CancelButton extends StatelessWidget {
-  const CancelButton({
-    super.key,
-  });
+  const CancelButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +9,7 @@ class CancelButton extends StatelessWidget {
       onPressed: () => Navigator.of(context).pop(),
       child: Text(
         "Cancel",
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
     );
   }

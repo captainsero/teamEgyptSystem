@@ -57,19 +57,19 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  backgroundColor: Col.light2,
+                  backgroundColor: Col.dark1,
                   title: Column(
                     children: [
                       Icon(
                         Icons.shopping_cart_checkout,
-                        color: Col.dark2,
+                        color: Col.light2,
                         size: 40,
                       ),
                       const SizedBox(height: 10),
                       Text(
                         "Checkout",
                         style: TextStyle(
-                          color: Col.dark2,
+                          color: Col.light2,
                           fontFamily: Fonts.names,
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
@@ -84,7 +84,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Divider(
-                          color: Col.dark2.withOpacity(0.4),
+                          color: Col.light2.withOpacity(0.4),
                           thickness: 1,
                         ),
                         const SizedBox(height: 16),
@@ -93,7 +93,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                           "Price: $baseTotal EGP",
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black87,
+                            color: Col.light1,
                             fontFamily: Fonts.tableHead,
                             fontWeight: FontWeight.w600,
                           ),
