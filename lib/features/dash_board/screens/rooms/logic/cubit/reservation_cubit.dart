@@ -30,15 +30,14 @@ class ReservationCubit extends Cubit<ReservationState> {
     final rev = await SupabaseReservations.insertRev(newRev);
     if (rev == true) {
       emit(ReservationSuccess(message: "Reservation Added Successfully"));
-
-      getAllRev();
+      // Do NOT call getAllRev() here
     } else {
       emit(
         ReservationError(
-          message: 'There is a reversation with the same number',
+          message: 'There is a reservation with the same number',
         ),
       );
-      getAllRev();
+      // Do NOT call getAllRev() here
     }
   }
 
@@ -48,12 +47,12 @@ class ReservationCubit extends Cubit<ReservationState> {
 
     if (del == false) {
       emit(
-        ReservationError(message: "Cann't delete the reversation, try again"),
+        ReservationError(message: "Can't delete the reservation, try again"),
       );
+      // Do NOT call getAllRev() here
     } else {
       emit(ReservationSuccess(message: "Reservation Deleted Successfully"));
-
-      getAllRev();
+      // Do NOT call getAllRev() here
     }
   }
 }

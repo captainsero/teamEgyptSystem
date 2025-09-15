@@ -101,6 +101,27 @@ class TimeScreenLogic {
           ),
           actions: [
             TextButton(
+              onPressed: () => Navigator.pop(context),
+
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+              ),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            TextButton(
               onPressed: () {
                 final input = priceController.text.trim();
                 final value = double.tryParse(input);
@@ -139,27 +160,6 @@ class TimeScreenLogic {
               ),
               child: const Text(
                 "Confirm",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-              ),
-              child: const Text(
-                "Cancel",
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,

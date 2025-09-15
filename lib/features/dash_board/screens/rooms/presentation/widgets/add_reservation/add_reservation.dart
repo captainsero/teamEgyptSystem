@@ -118,10 +118,9 @@ class _AddReservationState extends State<AddReservation> {
               state.message,
               ToastificationType.success,
             );
-            // Optionally refresh reservations here
-            // context.read<ReservationCubit>().getAllRev();
-            // Reset flag after a short delay
-            Future.delayed(const Duration(milliseconds: 500), () {
+            context.read<ReservationCubit>().getAllRev();
+            context.read<RoomsCubit>().getRooms();
+            Future.delayed(const Duration(milliseconds: 1000), () {
               _shownSuccess = false;
             });
           } else if (state is ReservationError) {
