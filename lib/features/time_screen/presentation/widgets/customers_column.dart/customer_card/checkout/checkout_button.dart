@@ -95,7 +95,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                           "Price: $baseTotal EGP",
                           style: TextStyle(
                             fontSize: 18,
-                            color: Col.light1,
+                            color: Col.light2,
                             fontFamily: Fonts.tableHead,
                             fontWeight: FontWeight.w600,
                           ),

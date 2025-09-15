@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 
-class ConfirmText extends StatelessWidget {
-  const ConfirmText({super.key, required this.priceController});
+class DialogTextField extends StatelessWidget {
+  const DialogTextField({
+    super.key,
+    required this.controller,
+    required this.hint,
+  });
 
-  final TextEditingController priceController;
+  final TextEditingController controller;
+  final String hint;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: priceController,
-      cursorColor: Colors.white70,
+      controller: controller,
+      cursorColor: Col.dark1,
       keyboardType: TextInputType.number, // show numeric keyboard
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-        // ✅ allows only digits + optional decimal with 2 places
-      ],
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.w600,
@@ -25,7 +25,7 @@ class ConfirmText extends StatelessWidget {
         fontSize: 16,
       ),
       decoration: InputDecoration(
-        hintText: "Confirm The Price",
+        hintText: hint,
         hintStyle: TextStyle(
           color: Colors.white70,
           fontWeight: FontWeight.bold,

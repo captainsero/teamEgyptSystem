@@ -8,6 +8,7 @@ import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/data/supabase_customers_data.dart';
 import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
+import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/dialog_text_feild.dart';
 import 'package:toastification/toastification.dart';
 
 class AddPersonButton extends StatelessWidget {
@@ -26,70 +27,72 @@ class AddPersonButton extends StatelessWidget {
         await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Center(child: Text("Add New Perosn")),
-
-            content: SizedBox(
-              width: ScreenSize.width / 5,
-              height: ScreenSize.height / 4,
-              child: Center(
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        hintText: "Enter Name",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.head,
-                        ),
-                      ),
-                    ),
-
-                    TextField(
-                      controller: numberController,
-                      decoration: InputDecoration(
-                        hintText: "Enter Number",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.head,
-                        ),
-                      ),
-                    ),
-
-                    TextField(
-                      controller: collageController,
-                      decoration: InputDecoration(
-                        hintText: "Enter Collage",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.head,
-                        ),
-                      ),
-                    ),
-
-                    TextField(
-                      controller: partnershipCodeController,
-                      decoration: InputDecoration(
-                        hintText: "Partnership Code",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.head,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+              side: BorderSide(
+                color: Col.light2, // Match checkout dialog border color
+                width: 2,
               ),
             ),
-
+            backgroundColor: Colors.black.withOpacity(
+              0.7,
+            ), // Semi-transparent background
+            contentPadding: const EdgeInsets.all(24),
+            title: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.person_add, color: Col.light2),
+                  const SizedBox(width: 8),
+                  Text(
+                    "Add New Person",
+                    style: TextStyle(
+                      color: Col.light2,
+                      fontFamily: Fonts.head,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            content: SizedBox(
+              width: ScreenSize.width / 5,
+              height: ScreenSize.height / 3.7,
+              child: Column(
+                children: [
+                  DialogTextField(controller: nameController, hint: "Name"),
+                  const Spacer(),
+                  DialogTextField(controller: numberController, hint: "Number"),
+                  const Spacer(),
+                  DialogTextField(
+                    controller: collageController,
+                    hint: "Collage",
+                  ),
+                  const Spacer(),
+                  DialogTextField(
+                    controller: partnershipCodeController,
+                    hint: "Partnership Code",
+                  ),
+                  const Spacer(),
+                ],
+              ),
+            ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(
+
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+                child: const Text(
                   "Cancel",
                   style: TextStyle(
                     color: Colors.black,
@@ -210,9 +213,17 @@ class AddPersonButton extends StatelessWidget {
 
                   // ✅ All checks passed → Insert data
                 },
-
-                style: ElevatedButton.styleFrom(backgroundColor: Col.dark2),
-                child: Text("Add", style: TextStyle(color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Col.light2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+                child: const Text("Add", style: TextStyle(color: Colors.black)),
               ),
             ],
           ),

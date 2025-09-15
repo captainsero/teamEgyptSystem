@@ -13,7 +13,7 @@ class PriceText extends StatelessWidget {
       "Price After Offer = $total EGP",
       style: TextStyle(
         fontSize: 30,
-        color: Col.light1,
+        color: Col.light2,
         fontFamily: Fonts.tableHead,
         fontWeight: FontWeight.bold,
       ),
