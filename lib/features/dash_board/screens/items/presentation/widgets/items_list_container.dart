@@ -10,7 +10,7 @@ class ItemsListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenSize.width / 1.5,
-      height: ScreenSize.height / 2.5,
+      height: ScreenSize.height / 1.7,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Col.dark2,
