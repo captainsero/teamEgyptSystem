@@ -56,8 +56,10 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(color: Col.light1, width: 1),
                   ),
-                  backgroundColor: Col.dark1,
+
+                  backgroundColor: Col.dark1.withOpacity(0.8),
                   title: Column(
                     children: [
                       Icon(
