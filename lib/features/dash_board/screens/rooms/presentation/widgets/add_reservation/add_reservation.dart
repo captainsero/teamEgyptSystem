@@ -38,6 +38,7 @@ class _AddReservationState extends State<AddReservation> {
   RoomsModel? selectedRoom;
   List<RoomsModel> rooms = [];
   final _formKey = GlobalKey<FormState>();
+  bool _shownSuccess = false;
 
   Future<void> _pickFromTime() async {
     final picked = await showTimePicker(
@@ -101,7 +102,7 @@ class _AddReservationState extends State<AddReservation> {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenSize.width / 3.4,
-      height: ScreenSize.height / 2.4,
+      height: ScreenSize.height / 2.2,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Col.dark2,
@@ -109,28 +110,26 @@ class _AddReservationState extends State<AddReservation> {
       ),
       child: BlocConsumer<ReservationCubit, ReservationState>(
         listener: (context, state) {
-          if (state is ReservationInsert) {
+          if (state is ReservationSuccess && !_shownSuccess) {
+            _shownSuccess = true;
             ModernToast.showToast(
               context,
               'Success',
-              'Reservation Added Successfully',
+              state.message,
               ToastificationType.success,
             );
-
-            context.read<RoomsCubit>().getRooms();
+            // Optionally refresh reservations here
+            // context.read<ReservationCubit>().getAllRev();
+            // Reset flag after a short delay
+            Future.delayed(const Duration(milliseconds: 500), () {
+              _shownSuccess = false;
+            });
           } else if (state is ReservationError) {
             ModernToast.showToast(
               context,
               'Error',
               state.message,
               ToastificationType.error,
-            );
-          } else if (state is ReservationDelete) {
-            ModernToast.showToast(
-              context,
-              'Success',
-              'Reservation Deleted',
-              ToastificationType.success,
             );
           }
         },

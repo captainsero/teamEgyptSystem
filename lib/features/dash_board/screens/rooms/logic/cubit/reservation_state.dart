@@ -7,7 +7,11 @@ final class ReservationInitial extends ReservationState {}
 
 class ReservationLoading extends ReservationState {}
 
-class ReservationInsert extends ReservationState {}
+class ReservationSuccess extends ReservationState{
+  final String message;
+
+  ReservationSuccess({required this.message});
+}
 
 class ReservationError extends ReservationState {
   final String message;
@@ -25,4 +29,3 @@ class ReservationGet extends ReservationState {
   });
 }
 
-class ReservationDelete extends ReservationState {}

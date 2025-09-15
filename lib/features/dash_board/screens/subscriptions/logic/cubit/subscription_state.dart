@@ -9,6 +9,8 @@ class SubscriptionLoading extends SubscriptionState {}
 
 class SubscriptionInsert extends SubscriptionState {}
 
+class SubscriptionDelete extends SubscriptionState {}
+
 class SubscriptionError extends SubscriptionState {
   final String message;
 

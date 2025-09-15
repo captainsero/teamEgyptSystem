@@ -60,6 +60,8 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
     emit(SubscriptionLoading());
     await SupabaseSubscriptions.deleteSubscription(number);
 
+    emit(SubscriptionDelete());
+
     getSubscriptions();
   }
 }

@@ -23,7 +23,7 @@ class AddRoom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenSize.width / 3.4,
-      height: ScreenSize.height / 2.4,
+      height: ScreenSize.height / 2.2,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Col.dark2,

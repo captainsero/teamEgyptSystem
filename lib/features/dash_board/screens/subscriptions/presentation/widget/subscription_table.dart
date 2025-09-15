@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/core/models/subscription_model.dart';
 import 'package:team_egypt_v3/core/utils/string_extensions.dart';
 import 'package:team_egypt_v3/core/widgets/circular_indicator.dart';
+import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/subscription_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_cell.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_header.dart';
+import 'package:toastification/toastification.dart';
 
 class SubscriptionTable extends StatefulWidget {
   const SubscriptionTable({super.key});
@@ -17,7 +19,17 @@ class SubscriptionTable extends StatefulWidget {
 class _SubscriptionTableState extends State<SubscriptionTable> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SubscriptionCubit, SubscriptionState>(
+    return BlocConsumer<SubscriptionCubit, SubscriptionState>(
+      listener: (context, state) {
+        if (state is SubscriptionDelete) {
+          ModernToast.showToast(
+            context,
+            'Successfull',
+            "Subscription Deleted Successfully",
+            ToastificationType.success,
+          );
+        }
+      },
       builder: (context, state) {
         List<SubscriptionModel> sub = [];
         if (state is SubscriptionInitial || state is SubscriptionLoading) {
