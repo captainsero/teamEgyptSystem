@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_egypt_v3/core/models/reservation_model.dart';
+import 'package:team_egypt_v3/core/models/stuff_model.dart';
 
 class SupabaseDaysData {
   static Future<List<Map<String, dynamic>>> getDayUsers(DateTime date) async {
@@ -42,6 +43,28 @@ class SupabaseDaysData {
             (json) =>
                 ReservationModel.fromJson(Map<String, dynamic>.from(json)),
           )
+          .toList();
+    } catch (e) {
+      print("Error fetching reservations: $e");
+      return [];
+    }
+  }
+
+  static Future<List<StuffModel>> getStuff(DateTime date) async {
+    try {
+      final dateOnly = DateTime(date.year, date.month, date.day);
+
+      final response = await Supabase.instance.client
+          .from("days-data")
+          .select("stuff_data")
+          .eq("date", dateOnly.toIso8601String())
+          .maybeSingle();
+
+      if (response == null || response["stuff_data"] == null) return [];
+
+      final List<dynamic> roomsData = response["stuff_data"];
+      return roomsData
+          .map((json) => StuffModel.fromJson(Map<String, dynamic>.from(json)))
           .toList();
     } catch (e) {
       print("Error fetching reservations: $e");

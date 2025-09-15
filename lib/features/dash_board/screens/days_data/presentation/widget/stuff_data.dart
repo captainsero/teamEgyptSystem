@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
-import 'package:team_egypt_v3/core/models/reservation_model.dart';
+import 'package:team_egypt_v3/core/models/stuff_model.dart';
 import 'package:team_egypt_v3/core/utils/string_extensions.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_data_cubit/days_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_cell.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_header.dart';
 
 class StuffData extends StatelessWidget {
-  StuffData({super.key, required this.dateFormat});
+  const StuffData({super.key, required this.dateFormat});
 
   final String dateFormat;
 
@@ -43,9 +43,9 @@ class StuffData extends StatelessWidget {
 
               BlocBuilder<DaysDataCubit, DaysDataState>(
                 builder: (context, state) {
-                  List<ReservationModel> reservation = [];
+                  List<StuffModel> stuff = [];
                   if (state is DayCustomersLoad) {
-                    reservation = state.reservations;
+                    stuff = state.stuff;
                   }
                   return Table(
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -53,6 +53,7 @@ class StuffData extends StatelessWidget {
                       0: FlexColumnWidth(2),
                       1: FlexColumnWidth(2),
                       2: FlexColumnWidth(2),
+                      3: FlexColumnWidth(2),
                     },
                     children: [
                       TableRow(
@@ -60,16 +61,21 @@ class StuffData extends StatelessWidget {
                           TableHeader("Name"),
                           TableHeader("Number"),
                           TableHeader("Position"),
-                          Center(child: TableHeader("Checkin-Checkout")),
+                          TableHeader("Checkin - Checkout"),
                         ],
                       ),
-                      for (var ele in reservation)
+                      for (var ele in stuff)
                         TableRow(
                           children: [
                             TableCell1(ele.name),
                             TableCell1(ele.number),
-                            TableCell1(ele.room),
-                            TableCell1(StringExtensions.formatDate(ele.date)),
+                            TableCell1(ele.position),
+                            TableCell1(
+                              StringExtensions.formatTimeRange(
+                                ele.checkIn,
+                                ele.checkOut,
+                              ),
+                            ),
                           ],
                         ),
                     ],

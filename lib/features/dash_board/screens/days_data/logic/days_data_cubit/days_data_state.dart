@@ -10,6 +10,11 @@ class DaysDataLoading extends DaysDataState {}
 class DayCustomersLoad extends DaysDataState {
   final List<Map<String, dynamic>> data;
   final List<ReservationModel> reservations;
+  final List<StuffModel> stuff;
 
-  DayCustomersLoad({required this.data, required this.reservations});
+  DayCustomersLoad({
+    required this.data,
+    required this.reservations,
+    required this.stuff,
+  });
 }
