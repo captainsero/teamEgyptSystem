@@ -38,7 +38,12 @@ class ItemsListContainer extends StatelessWidget {
                 fontFamily: Fonts.tableHead,
               ),
             ),
-            backgroundColor: Col.dark1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+              side: BorderSide(color: Col.light2, width: 2),
+            ),
+            backgroundColor: Colors.black.withOpacity(0.8),
+            contentPadding: const EdgeInsets.all(24),
             content: SizedBox(
               width: ScreenSize.width / 3,
               height: ScreenSize.height / 3.8,
@@ -116,6 +121,24 @@ class ItemsListContainer extends StatelessWidget {
             actions: [
               TextButton.icon(
                 onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.cancel_outlined,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                label: Text(
+                  "Cancle",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: Fonts.names,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     final name = item.name;
                     final price = double.parse(priceController.text);
@@ -137,27 +160,6 @@ class ItemsListContainer extends StatelessWidget {
                   "Done",
                   style: TextStyle(
                     color: Col.light2,
-                    fontFamily: Fonts.names,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-
-              SizedBox(width: 10),
-
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.cancel_outlined,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                label: Text(
-                  "Cancle",
-                  style: TextStyle(
-                    color: Colors.white,
                     fontFamily: Fonts.names,
                     fontSize: 20,
                   ),
