@@ -22,7 +22,6 @@ class ItemsListContainer extends StatelessWidget {
         context: context,
         builder: (context) {
           final _formKey = GlobalKey<FormState>();
-          final nameController = TextEditingController(text: item.name);
           final priceController = TextEditingController(
             text: item.price.toString(),
           );
@@ -48,22 +47,6 @@ class ItemsListContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: ScreenSize.width / 5.5,
-                      child: CustomTextField(
-                        controller: nameController,
-                        hint: "Name",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Name cannot be empty";
-                          }
-                          if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
-                            return "Name must contain only letters and numbers";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
                     Spacer(),
                     SizedBox(
                       width: ScreenSize.width / 5.5,
@@ -108,18 +91,17 @@ class ItemsListContainer extends StatelessWidget {
               TextButton.icon(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    final name = nameController.text;
+                    final name = item.name;
                     final price = double.parse(priceController.text);
                     final quantity = int.parse(quantityController.text);
 
-                    final item = ItemsModel(
+                    final newitem = ItemsModel(
                       name: name,
                       price: price,
                       quantity: quantity,
                     );
 
-                    context.read<ItemsCubit>().update(item);
-                    context.read<ItemsCubit>().getAll();
+                    context.read<ItemsCubit>().update(newitem);
 
                     Navigator.pop(context);
                   }

@@ -5,9 +5,6 @@ class ItemStatus extends StatelessWidget {
 
   final int quantity;
 
-  /// Convert TimeOfDay to minutes since midnight
-  int _toMinutes(TimeOfDay t) => t.hour * 60 + t.minute;
-
   @override
   Widget build(BuildContext context) {
     String label;
