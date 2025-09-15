@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/logic/customers_data_cubit/customers_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/presentation/screen/customers_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/screen/days_data.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/items/presentation/screen/items_screen.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/logic/cubit/partner_ship_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/presentation/screen/partnership_screen.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/presentation/screen/rooms.dart';
@@ -42,7 +43,7 @@ class ScreenSwitcher extends StatelessWidget {
               case 6:
                 return StuffScreen();
               case 7:
-                return Center(child: Text("Items Page"));
+                return ItemsScreen();
               default:
                 return Center(child: Text("Unknown Page"));
             }
