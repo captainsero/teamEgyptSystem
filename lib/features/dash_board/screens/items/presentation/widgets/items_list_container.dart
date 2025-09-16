@@ -21,7 +21,7 @@ class ItemsListContainer extends StatelessWidget {
       showDialog(
         context: context,
         builder: (context) {
-          final _formKey = GlobalKey<FormState>();
+          final formKey = GlobalKey<FormState>();
           final priceController = TextEditingController(
             text: item.price.toString(),
           );
@@ -48,7 +48,7 @@ class ItemsListContainer extends StatelessWidget {
               width: ScreenSize.width / 3,
               height: ScreenSize.height / 3.8,
               child: Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -139,7 +139,7 @@ class ItemsListContainer extends StatelessWidget {
               ),
               TextButton.icon(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (formKey.currentState!.validate()) {
                     final name = item.name;
                     final price = double.parse(priceController.text);
                     final quantity = int.parse(quantityController.text);

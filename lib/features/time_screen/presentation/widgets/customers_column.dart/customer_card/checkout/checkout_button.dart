@@ -4,6 +4,7 @@ import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
 import 'package:team_egypt_v3/core/models/in_team_users.dart';
+import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/data/supabase_partnership.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_logic.dart';
@@ -46,7 +47,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
             ? "Subscribed"
             : (offer != null ? offer.description : "No Offer");
 
-        context.read<TimeScreenCubit>().getTotal();
+        context.read<TimeScreenCubit>().getTotal(Validators.choosenDay);
 
         showDialog(
           context: context,

@@ -14,8 +14,8 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
   double htotal = 0;
   TimeScreenCubit() : super(TimeScreenInitial());
 
-  void getTotal() async {
-    final double total = await SupabaseInTeam.getTotal(Validators.choosenDay);
+  void getTotal(DateTime date) async {
+    final double total = await SupabaseInTeam.getTotal(date);
     htotal = total;
     emit(GetTotal(total: total));
   }

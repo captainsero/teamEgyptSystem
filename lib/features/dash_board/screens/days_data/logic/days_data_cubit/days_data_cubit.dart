@@ -15,10 +15,12 @@ class DaysDataCubit extends Cubit<DaysDataState> {
       final data = await SupabaseDaysData.getDayUsers(date);
       final reservations = await SupabaseDaysData.getReservations(date);
       final stuff = await SupabaseDaysData.getStuff(date);
+      if (isClosed) return;
       emit(
         DayCustomersLoad(data: data, reservations: reservations, stuff: stuff),
       );
     } catch (e) {
+      if (isClosed) return;
       print("Error cubit load Customers: $e");
     }
   }

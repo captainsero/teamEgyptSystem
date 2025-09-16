@@ -10,6 +10,7 @@ import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/stuff_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/total_salary_card.dart';
 import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
+import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 
 class DaysData extends StatefulWidget {
   const DaysData({super.key});
@@ -19,7 +20,6 @@ class DaysData extends StatefulWidget {
 }
 
 class _DaysDataState extends State<DaysData> {
-  double total = 0.0;
   DateTime selectedDate = Validators.choosenDay;
   late String dateFormat;
 
@@ -32,7 +32,7 @@ class _DaysDataState extends State<DaysData> {
 
   Future<void> _loadData() async {
     context.read<DaysDataCubit>().dayCustomersLoad(selectedDate);
-    total = await SupabaseInTeam.getTotal(selectedDate);
+    context.read<TimeScreenCubit>().getTotal(selectedDate);
     setState(() {});
   }
 
@@ -76,7 +76,15 @@ class _DaysDataState extends State<DaysData> {
 
               const SizedBox(height: 10),
 
-              TotalSalaryCard(total: total, dateFormat: dateFormat),
+              BlocBuilder<TimeScreenCubit, TimeScreenState>(
+                builder: (context, state) {
+                  double total = 0.0;
+                  if (state is GetTotal) {
+                    total = state.total;
+                  }
+                  return TotalSalaryCard(total: total, dateFormat: dateFormat);
+                },
+              ),
 
               const SizedBox(height: 10),
 

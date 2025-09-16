@@ -11,6 +11,7 @@ class PartnerShipCubit extends Cubit<PartnerShipState> {
   void partnerShipLoadData() async {
     emit(PartnerShipLoading());
     final offers = await SupabasePartnership.getAllOffers();
+    if (isClosed) return;
     emit(PartnerShipLoadOffers(offers: offers));
   }
 
