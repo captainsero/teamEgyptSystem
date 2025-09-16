@@ -9,7 +9,6 @@ import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/rooms_reservation_card.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/stuff_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/total_salary_card.dart';
-import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 
 class DaysData extends StatefulWidget {

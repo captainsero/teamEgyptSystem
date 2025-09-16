@@ -9,7 +9,6 @@ class RoomsCubit extends Cubit<RoomsState> {
   RoomsCubit() : super(RoomsInitial());
 
   void getRooms() async {
-    emit(RoomsLoading());
     final rooms = await SupabaseRooms.getRooms();
     emit(GetRooms(rooms: rooms));
   }

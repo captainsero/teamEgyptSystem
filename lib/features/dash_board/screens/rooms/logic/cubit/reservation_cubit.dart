@@ -11,7 +11,6 @@ class ReservationCubit extends Cubit<ReservationState> {
   ReservationCubit() : super(ReservationInitial());
 
   void getAllRev() async {
-    emit(ReservationLoading());
     final reservations = await SupabaseReservations.getAllRev();
     final reservationsByDate = await SupabaseReservations.getRevByDate(
       Validators.choosenDay,

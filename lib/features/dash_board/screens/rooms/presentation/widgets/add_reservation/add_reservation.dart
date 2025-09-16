@@ -118,9 +118,11 @@ class _AddReservationState extends State<AddReservation> {
               state.message,
               ToastificationType.success,
             );
-            context.read<ReservationCubit>().getAllRev();
-            context.read<RoomsCubit>().getRooms();
-            Future.delayed(const Duration(milliseconds: 1000), () {
+
+            Future.delayed(const Duration(milliseconds: 500), () {
+              context.read<ReservationCubit>().getAllRev();
+              context.read<RoomsCubit>().getRooms();
+
               _shownSuccess = false;
             });
           } else if (state is ReservationError) {
@@ -130,6 +132,13 @@ class _AddReservationState extends State<AddReservation> {
               state.message,
               ToastificationType.error,
             );
+
+            Future.delayed(const Duration(milliseconds: 500), () {
+              context.read<ReservationCubit>().getAllRev();
+              context.read<RoomsCubit>().getRooms();
+
+              _shownSuccess = false;
+            });
           }
         },
         builder: (context, state) {
