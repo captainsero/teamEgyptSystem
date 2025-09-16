@@ -16,7 +16,7 @@ class DialogTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      cursorColor: Col.dark1,
+      cursorColor: Colors.white,
       keyboardType: TextInputType.number, // show numeric keyboard
       style: TextStyle(
         color: Colors.white,

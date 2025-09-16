@@ -6,6 +6,7 @@ import 'package:team_egypt_v3/core/constants/screen_size.dart';
 import 'package:team_egypt_v3/core/models/users_class.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/data/supabase_customers_data.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_logic.dart';
+import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/dialog_text_feild.dart';
 
 class SearchPersonButton extends StatelessWidget {
   const SearchPersonButton({super.key});
@@ -15,15 +16,13 @@ class SearchPersonButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () async {
         final TextEditingController numberController = TextEditingController();
+        TextEditingController nameController = TextEditingController();
+        TextEditingController collageController = TextEditingController();
+        TextEditingController partnershipCodeController =
+            TextEditingController();
         await showDialog(
           context: context,
           builder: (context) {
-            String name = "";
-            String number = "";
-            String collage = "";
-            String code = "";
-            String partnierShip = "";
-
             return StatefulBuilder(
               builder: (context, setState) => AlertDialog(
                 shape: RoundedRectangleBorder(
@@ -52,87 +51,29 @@ class SearchPersonButton extends StatelessWidget {
                 ),
                 content: SizedBox(
                   width: ScreenSize.width / 5,
-                  height: ScreenSize.height / 2.3,
+                  height: ScreenSize.height / 2,
                   child: Column(
                     children: [
-                      TextField(
+                      DialogTextField(
                         controller: numberController,
-                        decoration: InputDecoration(
-                          hintText: "Enter Number",
-                          hintStyle: TextStyle(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Fonts.head,
-                          ),
-                          filled: true,
-                          fillColor: Colors.black.withOpacity(0.3),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(
-                              color: Col.light2,
-                              width: 1.3,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(
-                              color: Col.light2,
-                              width: 1.8,
-                            ),
-                          ),
-                        ),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.head,
-                        ),
+                        hint: "Enter Number",
                       ),
+
                       const SizedBox(height: 16),
-                      SelectableText(
-                        "Name : $name",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.names,
-                          fontSize: 20,
-                        ),
+                      DialogTextField(controller: nameController, hint: "Name"),
+
+                      const SizedBox(height: 16),
+                      DialogTextField(
+                        controller: collageController,
+                        hint: "Collage",
                       ),
-                      SelectableText(
-                        "Number : $number",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.names,
-                          fontSize: 20,
-                        ),
+
+                      const SizedBox(height: 16),
+                      DialogTextField(
+                        controller: partnershipCodeController,
+                        hint: "partniership Code",
                       ),
-                      SelectableText(
-                        "Collage : $collage",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.names,
-                          fontSize: 20,
-                        ),
-                      ),
-                      SelectableText(
-                        "Code : $code",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.names,
-                          fontSize: 20,
-                        ),
-                      ),
-                      SelectableText(
-                        "partnierShip : $partnierShip",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: Fonts.names,
-                          fontSize: 20,
-                        ),
-                      ),
+
                       const Spacer(),
                       Container(
                         width: ScreenSize.width / 7,
@@ -140,7 +81,7 @@ class SearchPersonButton extends StatelessWidget {
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(color: Colors.white),
                         child: BarcodeWidget(
-                          data: number,
+                          data: numberController.text,
                           backgroundColor: Colors.white,
                           barcode: Barcode.code128(),
                         ),
@@ -153,7 +94,6 @@ class SearchPersonButton extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
 
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.redAccent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -165,7 +105,7 @@ class SearchPersonButton extends StatelessWidget {
                     child: const Text(
                       "Cancel",
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -177,16 +117,16 @@ class SearchPersonButton extends StatelessWidget {
                             number: numberController.text,
                           );
                       if (user != null) {
-                        String partnerShipName =
-                            await TimeScreenLogic.getPartnerShipName(
-                              user.partnershipCode,
-                            );
                         setState(() {
-                          name = user.name;
-                          number = user.number;
-                          collage = user.collage;
-                          code = user.code;
-                          partnierShip = partnerShipName;
+                          nameController = TextEditingController(
+                            text: user.name,
+                          );
+                          collageController = TextEditingController(
+                            text: user.collage,
+                          );
+                          partnershipCodeController = TextEditingController(
+                            text: user.partnershipCode,
+                          );
                         });
                       }
                     },
