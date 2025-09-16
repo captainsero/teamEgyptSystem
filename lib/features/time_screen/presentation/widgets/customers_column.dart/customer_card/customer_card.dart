@@ -89,9 +89,6 @@ class CustomerCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
-                      const SizedBox(width: 15),
-                      IconAndText(icon: Icons.qr_code_2, text: item.code),
                     ],
                   ),
                 ],
