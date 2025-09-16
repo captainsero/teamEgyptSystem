@@ -25,7 +25,7 @@ class InTeamCubit extends Cubit<InTeamState> {
             code: e['code'],
             collage: e['collage'],
             partnershipCode: e['partnership_code'],
-            isSub: e['is_sub']
+            isSub: e['is_sub'],
           ),
         )
         .toList();
@@ -68,5 +68,28 @@ class InTeamCubit extends Cubit<InTeamState> {
     }
   }
 
-  
+  Future<bool> updateUser({
+    required String number,
+    String? name,
+    String? collage,
+    String? code,
+    String? partnershipCode,
+    bool? isSub,
+    DateTime? timer,
+  }) async {
+    final success = await SupabaseInTeam.updateInTeamUser(
+      number: number,
+      name: name,
+      collage: collage,
+      code: code,
+      partnershipCode: partnershipCode,
+      isSub: isSub,
+      timer: timer,
+    );
+    if (success) {
+      // Optionally reload users after update
+      await loadUsers();
+    }
+    return success;
+  }
 }

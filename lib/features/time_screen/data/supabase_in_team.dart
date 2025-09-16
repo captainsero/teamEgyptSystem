@@ -36,7 +36,7 @@ class SupabaseInTeam {
         "code": user.code,
         "collage": user.collage,
         'partnership_code': user.partnershipCode,
-        'is_sub': isSub
+        'is_sub': isSub,
       }).select();
 
       if (response.isNotEmpty) {
@@ -48,7 +48,7 @@ class SupabaseInTeam {
           code: user.code,
           collage: user.collage,
           partnershipCode: user.partnershipCode,
-          isSub: isSub
+          isSub: isSub,
         );
       } else {
         return null;
@@ -75,7 +75,7 @@ class SupabaseInTeam {
           code: response['code'],
           collage: response['collage'],
           partnershipCode: response['partnership_code'],
-          isSub: response['is_sub']
+          isSub: response['is_sub'],
         );
       } else {
         print('No user found for number: $number');
@@ -139,5 +139,34 @@ class SupabaseInTeam {
     }
   }
 
-  
+  static Future<bool> updateInTeamUser({
+    required String number,
+    String? name,
+    String? collage,
+    String? code,
+    String? partnershipCode,
+    bool? isSub,
+    DateTime? timer,
+  }) async {
+    try {
+      final updateData = <String, dynamic>{};
+      if (name != null) updateData['name'] = name;
+      if (collage != null) updateData['collage'] = collage;
+      if (code != null) updateData['code'] = code;
+      if (partnershipCode != null)
+        updateData['partnership_code'] = partnershipCode;
+      if (isSub != null) updateData['is_sub'] = isSub;
+      if (timer != null) updateData['timer'] = timer.toIso8601String();
+
+      await Supabase.instance.client
+          .from("in-team")
+          .update(updateData)
+          .eq('number', number);
+
+      return true;
+    } catch (e) {
+      print("Error updating in-team user: $e");
+      return false;
+    }
+  }
 }
