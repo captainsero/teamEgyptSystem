@@ -26,84 +26,143 @@ class SearchPersonButton extends StatelessWidget {
 
             return StatefulBuilder(
               builder: (context, setState) => AlertDialog(
-                title: Center(child: Text("Search a Person")),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: BorderSide(color: Col.light2, width: 2),
+                ),
+                backgroundColor: Colors.black.withOpacity(0.7),
+                contentPadding: const EdgeInsets.all(24),
+                title: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search, color: Col.light2),
+                      const SizedBox(width: 8),
+                      Text(
+                        "Search a Person",
+                        style: TextStyle(
+                          color: Col.light2,
+                          fontFamily: Fonts.head,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 content: SizedBox(
                   width: ScreenSize.width / 5,
-                  height: ScreenSize.height / 2.5,
-                  child: Center(
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: numberController,
-                          decoration: InputDecoration(
-                            hintText: "Enter Number",
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: Fonts.head,
+                  height: ScreenSize.height / 2.3,
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: numberController,
+                        decoration: InputDecoration(
+                          hintText: "Enter Number",
+                          hintStyle: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: Fonts.head,
+                          ),
+                          filled: true,
+                          fillColor: Colors.black.withOpacity(0.3),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(
+                              color: Col.light2,
+                              width: 1.3,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(
+                              color: Col.light2,
+                              width: 1.8,
                             ),
                           ),
                         ),
-                        SelectableText(
-                          "Name : $name",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Fonts.names,
-                            fontSize: 20,
-                          ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts.head,
                         ),
-                        SelectableText(
-                          "Number : $number",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Fonts.names,
-                            fontSize: 20,
-                          ),
+                      ),
+                      const SizedBox(height: 16),
+                      SelectableText(
+                        "Name : $name",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts.names,
+                          fontSize: 20,
                         ),
-                        SelectableText(
-                          "Collage : $collage",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Fonts.names,
-                            fontSize: 20,
-                          ),
+                      ),
+                      SelectableText(
+                        "Number : $number",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts.names,
+                          fontSize: 20,
                         ),
-                        SelectableText(
-                          "Code : $code",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Fonts.names,
-                            fontSize: 20,
-                          ),
+                      ),
+                      SelectableText(
+                        "Collage : $collage",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts.names,
+                          fontSize: 20,
                         ),
-                        SelectableText(
-                          "partnierShip : $partnierShip",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Fonts.names,
-                            fontSize: 20,
-                          ),
+                      ),
+                      SelectableText(
+                        "Code : $code",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts.names,
+                          fontSize: 20,
                         ),
-                        Spacer(),
-                        BarcodeWidget(
+                      ),
+                      SelectableText(
+                        "partnierShip : $partnierShip",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Fonts.names,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        width: ScreenSize.width / 7,
+                        height: ScreenSize.height / 7,
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: BarcodeWidget(
                           data: number,
+                          backgroundColor: Colors.white,
                           barcode: Barcode.code128(),
-                          width: ScreenSize.width / 7,
-                          height: ScreenSize.height / 7,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(
+
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                    child: const Text(
                       "Cancel",
                       style: TextStyle(
                         color: Colors.black,
@@ -131,10 +190,19 @@ class SearchPersonButton extends StatelessWidget {
                         });
                       }
                     },
-                    style: ElevatedButton.styleFrom(backgroundColor: Col.dark2),
-                    child: Text(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Col.light2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                    child: const Text(
                       "Search",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],

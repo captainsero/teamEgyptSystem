@@ -66,6 +66,9 @@ class AddRoom extends StatelessWidget {
                   reservationNum: 0,
                 );
                 context.read<RoomsCubit>().insertRoom(room);
+
+                nameController.clear();
+                priceController.clear();
               }
             }
 

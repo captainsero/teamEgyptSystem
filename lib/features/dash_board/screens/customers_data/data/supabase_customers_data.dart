@@ -34,35 +34,6 @@ class SupabaseCustomersData {
     }
   }
 
-  static Future<UsersClass?> getUsersDataByCode(String code) async {
-    try {
-      final response = await Supabase.instance.client
-          .from('teamegypt-users-data')
-          .select()
-          .eq('code', code)
-          .maybeSingle();
-
-      if (response != null) {
-        return UsersClass(
-          name: response['name'],
-          number: response['number'],
-          collage: response['collage'],
-          code: response['code'],
-          totalTime: response['total_time'] ?? 0,
-          points: response['points'] ?? 0,
-          barcodeUrl: response['barcode_url'] ?? '',
-          partnershipCode: response['partnership_code'] ?? '0000',
-        );
-      } else {
-        print('No user found for code: $code');
-        return null;
-      }
-    } catch (e) {
-      print("Error fetching user: $e");
-      return null;
-    }
-  }
-
   static Future<UsersClass?> getUsersDataByNumber({
     required String number,
   }) async {
@@ -107,6 +78,54 @@ class SupabaseCustomersData {
     } catch (e) {
       print("Error in paginated fetch: $e");
       return [];
+    }
+  }
+
+  // Update user data by number
+  static Future<bool> updateUserData({
+    required String number,
+    String? name,
+    String? collage,
+    String? partnershipCode,
+    int? totalTime,
+    int? points,
+    String? barcodeUrl,
+    String? code,
+  }) async {
+    try {
+      final updateData = <String, dynamic>{};
+      if (name != null) updateData['name'] = name;
+      if (collage != null) updateData['collage'] = collage;
+      if (partnershipCode != null)
+        updateData['partnership_code'] = partnershipCode;
+      if (totalTime != null) updateData['total_time'] = totalTime;
+      if (points != null) updateData['points'] = points;
+      if (barcodeUrl != null) updateData['barcode_url'] = barcodeUrl;
+      if (code != null) updateData['code'] = code;
+
+      await Supabase.instance.client
+          .from("teamegypt-users-data")
+          .update(updateData)
+          .eq('number', number);
+
+      return true;
+    } catch (e) {
+      print("Error updating user: $e");
+      return false;
+    }
+  }
+
+  // Delete user by number
+  static Future<bool> deleteUserByNumber({required String number}) async {
+    try {
+      await Supabase.instance.client
+          .from("teamegypt-users-data")
+          .delete()
+          .eq('number', number);
+      return true;
+    } catch (e) {
+      print("Error deleting user: $e");
+      return false;
     }
   }
 }
