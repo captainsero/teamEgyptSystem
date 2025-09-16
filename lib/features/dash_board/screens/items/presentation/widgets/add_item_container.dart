@@ -11,13 +11,22 @@ import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
 import 'package:toastification/toastification.dart';
 
-class AddItemContainer extends StatelessWidget {
-  AddItemContainer({super.key});
+class AddItemContainer extends StatefulWidget {
+  const AddItemContainer({super.key});
 
+  @override
+  State<AddItemContainer> createState() => _AddItemContainerState();
+}
+
+class _AddItemContainerState extends State<AddItemContainer> {
   final nameController = TextEditingController();
+
   final priceController = TextEditingController();
+
   final quantityController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   bool _shownSuccess = false;
 
   @override

@@ -81,7 +81,7 @@ class SearchPersonButton extends StatelessWidget {
                       Container(
                         width: ScreenSize.width / 7,
                         height: ScreenSize.height / 7,
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(color: Colors.white),
                         child: BarcodeWidget(
                           data: numberController.text,

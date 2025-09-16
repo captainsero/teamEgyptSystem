@@ -7,7 +7,7 @@ import 'package:team_egypt_v3/features/app_bar/presentation/screen/app_bar_main.
 import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/customers_column.dart';
-import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/today_rev_container.dart';
+import 'package:team_egypt_v3/features/time_screen/presentation/widgets/today_rev_container.dart';
 
 class TimeScreen extends StatefulWidget {
   const TimeScreen({super.key, required this.day});

@@ -7,7 +7,7 @@ import 'package:team_egypt_v3/core/utils/string_extensions.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/reservation_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_logic.dart';
-import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/room_condition.dart';
+import 'package:team_egypt_v3/features/time_screen/presentation/widgets/room_condition.dart';
 
 class TodayRevContainer extends StatelessWidget {
   const TodayRevContainer({super.key});
