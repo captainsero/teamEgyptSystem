@@ -8,8 +8,6 @@ import 'package:team_egypt_v3/core/models/users_class.dart';
 import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/data/supabase_customers_data.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
-import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
-import 'package:team_egypt_v3/features/time_screen/logic/time_screen_logic.dart';
 import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/dialog_text_feild.dart';
 import 'package:toastification/toastification.dart';
 

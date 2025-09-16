@@ -18,6 +18,7 @@ class AddItemContainer extends StatelessWidget {
   final priceController = TextEditingController();
   final quantityController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _shownSuccess = false;
 
   @override
   Widget build(BuildContext context) {
@@ -94,13 +95,20 @@ class AddItemContainer extends StatelessWidget {
             Spacer(),
             BlocConsumer<ItemsCubit, ItemsState>(
               listener: (context, state) {
-                if (state is ItemsSuccessfull) {
+                if (state is ItemsSuccessfull && !_shownSuccess) {
+                  _shownSuccess = true;
                   ModernToast.showToast(
                     context,
-                    'Successfull',
+                    'Success',
                     state.message,
                     ToastificationType.success,
                   );
+                  // Remove getAll() from here!
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    _shownSuccess = false;
+                    // Optionally refresh here if needed:
+                    context.read<ItemsCubit>().getAll();
+                  });
                 } else if (state is ItemsError) {
                   ModernToast.showToast(
                     context,
@@ -124,6 +132,10 @@ class AddItemContainer extends StatelessWidget {
                     );
 
                     context.read<ItemsCubit>().insert(item);
+
+                    nameController.clear();
+                    priceController.clear();
+                    quantityController.clear();
                   }
                 }
 

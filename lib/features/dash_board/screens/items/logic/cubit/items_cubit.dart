@@ -57,7 +57,5 @@ class ItemsCubit extends Cubit<ItemsState> {
     } else {
       emit(ItemsSuccessfull(message: "Item Updated successfully"));
     }
-    if (await SupabaseItems.getByName(items.name) == null) {}
-    getAll();
   }
 }
