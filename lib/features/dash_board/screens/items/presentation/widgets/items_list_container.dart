@@ -5,6 +5,7 @@ import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
 import 'package:team_egypt_v3/core/models/items_model.dart';
 import 'package:team_egypt_v3/core/widgets/circular_indicator.dart';
+import 'package:team_egypt_v3/core/widgets/custom_drop_down_field.dart';
 import 'package:team_egypt_v3/core/widgets/custom_text_field.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
@@ -29,6 +30,8 @@ class ItemsListContainer extends StatelessWidget {
             text: item.quantity.toString(),
           );
 
+          String category = item.category;
+
           return AlertDialog(
             title: Text(
               "Edit ${item.name}",
@@ -46,7 +49,7 @@ class ItemsListContainer extends StatelessWidget {
             contentPadding: const EdgeInsets.all(24),
             content: SizedBox(
               width: ScreenSize.width / 3,
-              height: ScreenSize.height / 3.8,
+              height: ScreenSize.height / 3,
               child: Form(
                 key: formKey,
                 child: Column(
@@ -114,6 +117,23 @@ class ItemsListContainer extends StatelessWidget {
                       ],
                     ),
                     Spacer(),
+                    SizedBox(
+                      width: ScreenSize.width / 5.5,
+                      child: CustomDropdownField(
+                        value: category,
+                        items: ["Drink", "Snack"],
+                        hint: "Select Category",
+                        onChanged: (value) {
+                          category = value!;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please select a Room";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -148,6 +168,7 @@ class ItemsListContainer extends StatelessWidget {
                       name: name,
                       price: price,
                       quantity: quantity,
+                      category: category,
                     );
 
                     context.read<ItemsCubit>().update(newitem);
@@ -201,8 +222,9 @@ class ItemsListContainer extends StatelessWidget {
                       0: FlexColumnWidth(2),
                       1: FlexColumnWidth(2),
                       2: FlexColumnWidth(2),
-                      3: FlexColumnWidth(1.1),
-                      4: FlexColumnWidth(2),
+                      3: FlexColumnWidth(2),
+                      4: FlexColumnWidth(1.4),
+                      5: FlexColumnWidth(2),
                     },
                     children: [
                       TableRow(
@@ -210,6 +232,7 @@ class ItemsListContainer extends StatelessWidget {
                           TableHeader("Name"),
                           TableHeader("Price"),
                           TableHeader("Quantity"),
+                          TableHeader("Category"),
                           Center(child: TableHeader("Status")),
 
                           Center(child: TableHeader("Actions")),
@@ -221,6 +244,7 @@ class ItemsListContainer extends StatelessWidget {
                             TableCell1(ele.name),
                             TableCell1(ele.price),
                             TableCell1(ele.quantity),
+                            TableCell1(ele.category),
                             ItemStatus(quantity: ele.quantity),
 
                             Row(

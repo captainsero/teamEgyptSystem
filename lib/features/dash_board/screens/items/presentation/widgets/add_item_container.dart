@@ -5,6 +5,7 @@ import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
 import 'package:team_egypt_v3/core/models/items_model.dart';
 import 'package:team_egypt_v3/core/widgets/circular_indicator.dart';
+import 'package:team_egypt_v3/core/widgets/custom_drop_down_field.dart';
 import 'package:team_egypt_v3/core/widgets/custom_text_field.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
 import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
@@ -25,6 +26,8 @@ class _AddItemContainerState extends State<AddItemContainer> {
 
   final quantityController = TextEditingController();
 
+  String? category;
+
   final _formKey = GlobalKey<FormState>();
 
   bool _shownSuccess = false;
@@ -33,7 +36,7 @@ class _AddItemContainerState extends State<AddItemContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenSize.width / 1.5,
-      height: ScreenSize.height / 4,
+      height: ScreenSize.height / 3.5,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Col.dark2,
@@ -102,76 +105,101 @@ class _AddItemContainerState extends State<AddItemContainer> {
               ],
             ),
             Spacer(),
-            BlocConsumer<ItemsCubit, ItemsState>(
-              listener: (context, state) {
-                if (state is ItemsSuccessfull && !_shownSuccess) {
-                  _shownSuccess = true;
-                  ModernToast.showToast(
-                    context,
-                    'Success',
-                    state.message,
-                    ToastificationType.success,
-                  );
-                  // Remove getAll() from here!
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    _shownSuccess = false;
-                    // Optionally refresh here if needed:
-                    context.read<ItemsCubit>().getAll();
-                  });
-                } else if (state is ItemsError) {
-                  ModernToast.showToast(
-                    context,
-                    'Error',
-                    state.message,
-                    ToastificationType.error,
-                  );
-                }
-              },
-              builder: (context, state) {
-                void addButton() {
-                  if (_formKey.currentState!.validate()) {
-                    final name = nameController.text;
-                    final price = double.parse(priceController.text);
-                    final quantity = int.parse(quantityController.text);
+            Row(
+              children: [
+                SizedBox(
+                  width: ScreenSize.width / 5.5,
+                  child: CustomDropdownField(
+                    value: category,
+                    items: ["Drink", "Snack"],
+                    hint: "Select Category",
+                    onChanged: (value) {
+                      setState(() {
+                        category = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please select a Room";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Spacer(),
+                BlocConsumer<ItemsCubit, ItemsState>(
+                  listener: (context, state) {
+                    if (state is ItemsSuccessfull && !_shownSuccess) {
+                      _shownSuccess = true;
+                      ModernToast.showToast(
+                        context,
+                        'Success',
+                        state.message,
+                        ToastificationType.success,
+                      );
+                      // Remove getAll() from here!
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        _shownSuccess = false;
+                        // Optionally refresh here if needed:
+                        context.read<ItemsCubit>().getAll();
+                      });
+                    } else if (state is ItemsError) {
+                      ModernToast.showToast(
+                        context,
+                        'Error',
+                        state.message,
+                        ToastificationType.error,
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    void addButton() {
+                      if (_formKey.currentState!.validate()) {
+                        final name = nameController.text;
+                        final price = double.parse(priceController.text);
+                        final quantity = int.parse(quantityController.text);
 
-                    final item = ItemsModel(
-                      name: name,
-                      price: price,
-                      quantity: quantity,
-                    );
+                        final item = ItemsModel(
+                          name: name,
+                          price: price,
+                          quantity: quantity,
+                          category: category!,
+                        );
 
-                    context.read<ItemsCubit>().insert(item);
+                        context.read<ItemsCubit>().insert(item);
 
-                    nameController.clear();
-                    priceController.clear();
-                    quantityController.clear();
-                  }
-                }
+                        nameController.clear();
+                        priceController.clear();
+                        quantityController.clear();
+                      }
+                    }
 
-                if (state is ItemsLoading) {
-                  return CircularIndicator();
-                } else {
-                  return Align(
-                    alignment: Alignment.center,
-                    child: TextButton.icon(
-                      onPressed: addButton,
-                      icon: Icon(
-                        Icons.add_circle_sharp,
-                        color: Col.light2,
-                        size: 20,
-                      ),
-                      label: Text(
-                        "Add",
-                        style: TextStyle(
-                          color: Col.light2,
-                          fontFamily: Fonts.names,
-                          fontSize: 20,
+                    if (state is ItemsLoading) {
+                      return CircularIndicator();
+                    } else {
+                      return Align(
+                        alignment: Alignment.center,
+                        child: TextButton.icon(
+                          onPressed: addButton,
+                          icon: Icon(
+                            Icons.add_circle_sharp,
+                            color: Col.light2,
+                            size: 20,
+                          ),
+                          label: Text(
+                            "Add",
+                            style: TextStyle(
+                              color: Col.light2,
+                              fontFamily: Fonts.names,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                }
-              },
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
           ],
         ),

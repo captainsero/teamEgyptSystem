@@ -20,6 +20,7 @@ class SupabaseItems {
         'name': items.name,
         'price': items.price,
         'quantity': items.quantity,
+        'category': items.category,
       });
       return true;
     } catch (e) {
@@ -38,6 +39,7 @@ class SupabaseItems {
               name: e['name'],
               price: e['price'],
               quantity: e['quantity'],
+              category: e['category'],
             ),
           )
           .toList();
@@ -55,6 +57,7 @@ class SupabaseItems {
           name: response['name'],
           price: response['price'],
           quantity: response['quantity'],
+          category: response['category'],
         );
       }
       return null;
@@ -79,7 +82,11 @@ class SupabaseItems {
   static Future<bool> updateByName(ItemsModel items) async {
     try {
       await _supabase
-          .update({'price': items.price, 'quantity': items.quantity})
+          .update({
+            'price': items.price,
+            'quantity': items.quantity,
+            'category': items.category,
+          })
           .eq('name', items.name);
       return true;
     } catch (e) {
