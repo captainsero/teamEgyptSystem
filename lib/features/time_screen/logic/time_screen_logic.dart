@@ -20,6 +20,9 @@ import 'package:toastification/toastification.dart';
 class TimeScreenLogic {
   static double applyOffer(double total, double hours, OfferClass? offer) {
     if (offer == null) return total;
+    if (total == 80) {
+      hours = 5;
+    }
 
     switch (offer.type) {
       case "percentage":

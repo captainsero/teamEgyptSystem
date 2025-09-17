@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
@@ -61,28 +62,59 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                   ),
 
                   backgroundColor: Col.dark1.withOpacity(0.8),
-                  title: Column(
+                  title: Row(
                     children: [
-                      Icon(
-                        Icons.shopping_cart_checkout,
-                        color: Col.light2,
-                        size: 40,
+                      Column(
+                        children: [
+                          Text(
+                            "Price: $baseTotal EGP",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Col.light2,
+                              fontFamily: Fonts.tableHead,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            "Offer: $offerDis",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.green.shade700,
+                              fontFamily: Fonts.tableHead,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "Checkout",
-                        style: TextStyle(
-                          color: Col.light2,
-                          fontFamily: Fonts.names,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
+
+                      Spacer(),
+                      PriceText(total: finalTotal),
+                      Spacer(),
+
+                      Column(
+                        children: [
+                          Icon(
+                            Icons.shopping_cart_checkout,
+                            color: Col.light2,
+                            size: 40,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            widget.user.name,
+                            style: TextStyle(
+                              color: Col.light2,
+                              fontFamily: Fonts.names,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   content: SizedBox(
-                    width: ScreenSize.width / 3,
-                    height: ScreenSize.height / 3.5,
+                    width: ScreenSize.width / 1.2,
+                    height: ScreenSize.height / 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -92,32 +124,95 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                         ),
                         const SizedBox(height: 16),
 
-                        Text(
-                          "Price: $baseTotal EGP",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Col.light2,
-                            fontFamily: Fonts.tableHead,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: ScreenSize.width / 6,
+                              height: ScreenSize.height / 2.2,
+                              child: Column(
+                                children: [
+                                  OrededItemsColumn(),
+
+                                  SizedBox(
+                                    width: ScreenSize.width / 5,
+                                    child: Divider(
+                                      color: Col.light2.withOpacity(0.4),
+                                      thickness: 1,
+                                    ),
+                                  ),
+
+                                  Spacer(flex: 2),
+
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Hours Fee:",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        "\$25.00",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+
+                                  Spacer(flex: 1),
+
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Items Fee:",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        "\$60.00",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(
+                                    width: ScreenSize.width / 5,
+                                    child: Divider(
+                                      color: Col.light2.withOpacity(0.4),
+                                      thickness: 1,
+                                    ),
+                                  ),
+
+                                  Spacer(flex: 1),
+
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Total:",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        "\$60.00",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+
+                                  Spacer(flex: 2),
+
+                                  ConfirmText(priceController: priceController),
+                                ],
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: ScreenSize.height / 2.2,
+                              child: VerticalDivider(
+                                color: Col.light2.withOpacity(0.4),
+                                thickness: 1,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 10),
-
-                        Text(
-                          "Offer: $offerDis",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.green.shade700,
-                            fontFamily: Fonts.tableHead,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-
-                        PriceText(total: finalTotal),
-                        const SizedBox(height: 12),
-
-                        ConfirmText(priceController: priceController),
                       ],
                     ),
                   ),
@@ -157,6 +252,95 @@ class _CheckoutButtonState extends State<CheckoutButton> {
       style: TextButton.styleFrom(
         foregroundColor: Colors.white, // Optional, text/icon color
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+    );
+  }
+}
+
+class OrededItemsColumn extends StatelessWidget {
+  const OrededItemsColumn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: ScreenSize.height / 4,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            for (int i = 0; i < 5; i++)
+              Card(
+                color: Col.dark2,
+                child: Row(
+                  children: [
+                    Spacer(),
+                    Column(
+                      children: [
+                        Text("Cola", style: TextStyle(color: Colors.white)),
+                        Text(
+                          "\$20.00 each",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+
+                    // Minus button
+                    Spacer(),
+                    Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: Col.light1,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.remove, color: Colors.white),
+                        iconSize: 20,
+                        padding: EdgeInsets.zero,
+                        splashRadius: 20,
+                      ),
+                    ),
+
+                    Spacer(),
+                    Text("0", style: TextStyle(color: Colors.white)),
+
+                    // Add button
+                    Spacer(),
+                    Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: Col.light1,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.add, color: Colors.white),
+                        iconSize: 20,
+                        padding: EdgeInsets.zero,
+                        splashRadius: 20,
+                      ),
+                    ),
+
+                    Spacer(),
+                    Column(
+                      children: [
+                        Text("\$20.00", style: TextStyle(color: Colors.white)),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Remove",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
