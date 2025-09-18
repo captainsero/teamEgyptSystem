@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_egypt_v3/core/models/checkout_items.dart';
-import 'package:team_egypt_v3/core/models/items_model.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/logic/customers_data_cubit/customers_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_data_cubit/days_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
@@ -39,6 +38,8 @@ void main() async {
 
   Hive.registerAdapter(CheckoutItemsAdapter());
   Box itemsBox = await Hive.openBox<CheckoutItems>('itemsBox');
+  Box itemsTotal = await Hive.openBox<double>('itemsTotal');
+  await itemsTotal.compact();
   await itemsBox.compact();
 
   runApp(const MyApp());
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
           create: (_) => ReservationCubit()..getAllRev(),
         ),
         BlocProvider<StuffCubit>(create: (_) => StuffCubit()..getAll()),
-        BlocProvider<ItemsCubit>(create: (_) => ItemsCubit()..getAll()),
+        BlocProvider<ItemsCubit>(create: (_) => ItemsCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

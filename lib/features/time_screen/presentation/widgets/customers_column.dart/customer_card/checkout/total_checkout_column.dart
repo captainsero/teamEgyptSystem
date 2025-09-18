@@ -16,7 +16,7 @@ class TotalCheckoutColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        OrededItemsColumn(),
+        OrderedItemsColumn(),
     
         SizedBox(
           width: ScreenSize.width / 5,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
+import 'package:team_egypt_v3/core/models/checkout_items.dart';
 import 'package:team_egypt_v3/core/models/items_model.dart';
 import 'package:team_egypt_v3/core/widgets/circular_indicator.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
@@ -130,7 +132,20 @@ class _ItemsContainerState extends State<ItemsContainer> {
                                   child: ElevatedButton(
                                     onPressed: item.quantity == 0
                                         ? null
-                                        : () {},
+                                        : () async {
+                                            final box = Hive.box<CheckoutItems>(
+                                              'itemsBox',
+                                            );
+
+                                            await box.add(
+                                              CheckoutItems(
+                                                name: items[index].name,
+                                                price: items[index].price,
+                                                quantity: items[index].quantity,
+                                                category: items[index].category,
+                                              ),
+                                            );
+                                          },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Col.dark2,
                                       shape: RoundedRectangleBorder(
