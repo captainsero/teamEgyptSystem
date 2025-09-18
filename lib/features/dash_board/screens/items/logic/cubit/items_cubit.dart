@@ -27,6 +27,16 @@ class ItemsCubit extends Cubit<ItemsState> {
     }
   }
 
+  void getByCategory(String category) async {
+    emit(ItemsLoading());
+    final items = await SupabaseItems.getByCategory(category);
+    if (items == null) {
+      emit(ItemsError(message: "There is no $category"));
+    } else {
+      emit(ItemsGetByCategory(items: items));
+    }
+  }
+
   void insert(ItemsModel items) async {
     emit(ItemsLoading());
     final insert = await SupabaseItems.insert(items);

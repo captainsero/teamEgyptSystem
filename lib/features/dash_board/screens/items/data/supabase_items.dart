@@ -49,6 +49,25 @@ class SupabaseItems {
     }
   }
 
+  static Future<List<ItemsModel>> getByCategory(String category) async {
+    try {
+      final response = await _supabase.select().eq('category', category);
+      return (response as List)
+          .map(
+            (e) => ItemsModel(
+              name: e['name'],
+              price: e['price'],
+              quantity: e['quantity'],
+              category: e['category'],
+            ),
+          )
+          .toList();
+    } catch (e) {
+      print("Error getting items: $e");
+      return [];
+    }
+  }
+
   static Future<ItemsModel?> getByName(String name) async {
     try {
       final response = await _supabase.select().eq('name', name).maybeSingle();

@@ -127,7 +127,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                         Row(
                           children: [
                             SizedBox(
-                              width: ScreenSize.width / 6,
+                              width: ScreenSize.width / 5,
                               height: ScreenSize.height / 2.2,
                               child: Column(
                                 children: [
@@ -211,6 +211,11 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                                 thickness: 1,
                               ),
                             ),
+
+                            Spacer(),
+
+                            ItemsContainer(head: "Drink"),
+                            Spacer(),
                           ],
                         ),
                       ],
@@ -252,6 +257,35 @@ class _CheckoutButtonState extends State<CheckoutButton> {
       style: TextButton.styleFrom(
         foregroundColor: Colors.white, // Optional, text/icon color
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+    );
+  }
+}
+
+class ItemsContainer extends StatelessWidget {
+  const ItemsContainer({super.key, required this.head});
+  final String head;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: ScreenSize.width / 1.68,
+      height: ScreenSize.height / 2.2,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Col.light2.withOpacity(0.4)),
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: (){},
+              style: ButtonStyle(),
+              child: Text(head) ,
+
+            ),
+          ],
+        ),
       ),
     );
   }

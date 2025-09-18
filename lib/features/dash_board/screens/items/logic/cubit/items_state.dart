@@ -19,6 +19,12 @@ class ItemsError extends ItemsState {
   ItemsError({required this.message});
 }
 
+class ItemsGetByCategory extends ItemsState {
+  final List<ItemsModel> items;
+
+  ItemsGetByCategory({required this.items});
+}
+
 class ItemsGetAll extends ItemsState {
   final List<ItemsModel> items;
 
