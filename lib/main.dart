@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:team_egypt_v3/core/models/checkout_items.dart';
+import 'package:team_egypt_v3/core/models/items_model.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/logic/customers_data_cubit/customers_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_data_cubit/days_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
@@ -22,6 +27,19 @@ void main() async {
     anonKey:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5a3V1Y3F3bWduZmpiY3praWNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUwMTQwODgsImV4cCI6MjA3MDU5MDA4OH0.2FP_QbOXWeXCBLk4j71CmS8Pj27yyyHNzDNuKM4rPp0",
   );
+
+  if (Platform.isWindows) {
+    final hivePath =
+        '${Platform.environment['APPDATA']}\\team_egypt_v_1_0_1\\hive_data';
+    await Directory(hivePath).create(recursive: true); // Make sure it exists
+    Hive.init(hivePath);
+  } else {
+    await Hive.initFlutter();
+  }
+
+  Hive.registerAdapter(CheckoutItemsAdapter());
+  Box itemsBox = await Hive.openBox<CheckoutItems>('itemsBox');
+  await itemsBox.compact();
 
   runApp(const MyApp());
 }

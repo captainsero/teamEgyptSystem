@@ -113,4 +113,19 @@ class SupabaseItems {
       return false;
     }
   }
+
+  static Future<bool> updateQuantityByName(
+    ItemsModel items,
+    int quantity,
+  ) async {
+    try {
+      await _supabase
+          .update({'quantity': items.quantity - quantity})
+          .eq('name', items.name);
+      return true;
+    } catch (e) {
+      print("Error updating item: $e");
+      return false;
+    }
+  }
 }

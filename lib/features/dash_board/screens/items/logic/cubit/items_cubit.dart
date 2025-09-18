@@ -68,4 +68,12 @@ class ItemsCubit extends Cubit<ItemsState> {
       emit(ItemsSuccessfull(message: "Item Updated successfully"));
     }
   }
+
+  void updateQuantity(ItemsModel items, int quantity) async {
+    emit(ItemsLoading());
+    final update = await SupabaseItems.updateQuantityByName(items, quantity);
+    if (update) {
+      getAll();
+    }
+  }
 }
