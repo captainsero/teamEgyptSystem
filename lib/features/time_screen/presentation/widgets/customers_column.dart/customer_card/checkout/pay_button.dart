@@ -77,12 +77,11 @@ class PayButton extends StatelessWidget {
 
       style: ElevatedButton.styleFrom(
         backgroundColor: Col.dark2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       ),
       child: const Text(
         "Pay",
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: TextStyle(color: Colors.white, fontSize: 20),
       ),
     );
   }

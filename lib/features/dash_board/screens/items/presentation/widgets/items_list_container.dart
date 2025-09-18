@@ -13,8 +13,19 @@ import 'package:team_egypt_v3/features/dash_board/screens/items/presentation/wid
 import 'package:team_egypt_v3/features/dash_board/widgets/table_cell.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_header.dart';
 
-class ItemsListContainer extends StatelessWidget {
+class ItemsListContainer extends StatefulWidget {
   const ItemsListContainer({super.key});
+
+  @override
+  State<ItemsListContainer> createState() => _ItemsListContainerState();
+}
+
+class _ItemsListContainerState extends State<ItemsListContainer> {
+  @override
+  void initState() {
+    context.read<ItemsCubit>().getAll();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

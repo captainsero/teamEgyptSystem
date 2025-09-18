@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
 
 class DeleteButton extends StatelessWidget {
-  const DeleteButton({
-    super.key,
-    required this.number,
-  });
+  const DeleteButton({super.key, required this.number});
 
   final String number;
 
@@ -28,7 +25,10 @@ class DeleteButton extends StatelessWidget {
         }
       },
       style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-      child: const Text("Delete", style: TextStyle(color: Colors.black)),
+      child: const Text(
+        "Delete",
+        style: TextStyle(color: Colors.black, fontSize: 20),
+      ),
     );
   }
 }

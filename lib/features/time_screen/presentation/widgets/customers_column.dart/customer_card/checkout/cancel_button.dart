@@ -9,7 +9,11 @@ class CancelButton extends StatelessWidget {
       onPressed: () => Navigator.of(context).pop(),
       child: Text(
         "Cancel",
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
       ),
     );
   }
