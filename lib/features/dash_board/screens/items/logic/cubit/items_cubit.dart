@@ -65,7 +65,7 @@ class ItemsCubit extends Cubit<ItemsState> {
     }
   }
 
-  void updateQuantity(String item, int quantity) async {
+  void updateQuantity() async {
     emit(ItemsLoading());
     final update = await SupabaseItems.syncCheckoutToSupabase();
     if (update) {

@@ -160,7 +160,10 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                   actions: [
                     Row(
                       children: [
-                        DeleteButton(number: widget.user.number),
+                        PayButton(
+                          priceController: priceController,
+                          widget: widget,
+                        ),
 
                         const Spacer(),
 
@@ -168,10 +171,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
 
                         const SizedBox(width: 12),
 
-                        PayButton(
-                          priceController: priceController,
-                          widget: widget,
-                        ),
+                        DeleteButton(number: widget.user.number),
                       ],
                     ),
                   ],

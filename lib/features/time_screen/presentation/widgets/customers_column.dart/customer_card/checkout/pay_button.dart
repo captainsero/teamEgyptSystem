@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/presentation/widgets/customers_column.dart/customer_card/checkout/checkout_button.dart';
@@ -60,6 +61,7 @@ class PayButton extends StatelessWidget {
 
         try {
           await context.read<InTeamCubit>().deleteUser(widget.user.number);
+          context.read<ItemsCubit>().updateQuantity();
         } catch (e) {
           print('Error in delete button: $e');
           ScaffoldMessenger.of(context).showSnackBar(
