@@ -21,13 +21,14 @@ class CheckoutItemsAdapter extends TypeAdapter<CheckoutItems> {
       price: fields[1] as double,
       quantity: fields[2] as int,
       category: fields[3] as String,
+      mainQuantity: fields[4] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, CheckoutItems obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class CheckoutItemsAdapter extends TypeAdapter<CheckoutItems> {
       ..writeByte(2)
       ..write(obj.quantity)
       ..writeByte(3)
-      ..write(obj.category);
+      ..write(obj.category)
+      ..writeByte(4)
+      ..write(obj.mainQuantity);
   }
 
   @override

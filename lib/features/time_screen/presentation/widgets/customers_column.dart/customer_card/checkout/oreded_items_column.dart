@@ -19,16 +19,16 @@ class OrderedItemsColumn extends StatelessWidget {
         builder: (context, box, _) {
           final items = box.values.toList();
 
-          // ✅  Calculate total of all items
+          // ✅ calculate total using each item's own quantity
           final total = items.fold<double>(
             0,
             (sum, item) => sum + (item.price * item.quantity),
           );
 
-          // ✅  Save to the totalBox (key 'total')
           totalBox.put('total', total);
 
           if (items.isEmpty) {
+            totalBox.put('total', 0.0);
             return const Center(
               child: Text(
                 'No items yet',
@@ -63,18 +63,16 @@ class _ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<_ItemCard> {
-  int itemNum = 1;
-
   void _updateQuantity(int newQty) {
-    setState(() => itemNum = newQty);
-    // ✅ also update in Hive so totals remain correct
+    // update Hive so the stored quantity stays correct
     widget.box.putAt(
       widget.index,
       CheckoutItems(
         name: widget.item.name,
         price: widget.item.price,
-        quantity: itemNum,
+        quantity: newQty,
         category: widget.item.category,
+        mainQuantity: widget.item.mainQuantity,
       ),
     );
   }
@@ -99,28 +97,33 @@ class _ItemCardState extends State<_ItemCard> {
             ],
           ),
           const Spacer(),
-
           _QtyButton(
             icon: Icons.remove,
             onPressed: () {
-              if (itemNum > 1) _updateQuantity(itemNum - 1);
+              if (widget.item.quantity > 1) {
+                _updateQuantity(widget.item.quantity - 1);
+              }
             },
           ),
-
           const Spacer(),
-          Text('$itemNum', style: const TextStyle(color: Colors.white)),
-
+          Text(
+            '${widget.item.quantity}',
+            style: const TextStyle(color: Colors.white),
+          ),
           const Spacer(),
           _QtyButton(
             icon: Icons.add,
-            onPressed: () => _updateQuantity(itemNum + 1),
+            onPressed: () {
+              if (widget.item.mainQuantity > widget.item.quantity) {
+                _updateQuantity(widget.item.quantity + 1);
+              }
+            },
           ),
-
           const Spacer(),
           Column(
             children: [
               Text(
-                '\$${(widget.item.price * itemNum).toStringAsFixed(2)}',
+                '\$${(widget.item.price * widget.item.quantity).toStringAsFixed(2)}',
                 style: const TextStyle(color: Colors.white),
               ),
               TextButton(

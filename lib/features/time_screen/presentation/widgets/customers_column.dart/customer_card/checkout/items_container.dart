@@ -141,8 +141,10 @@ class _ItemsContainerState extends State<ItemsContainer> {
                                               CheckoutItems(
                                                 name: items[index].name,
                                                 price: items[index].price,
-                                                quantity: items[index].quantity,
+                                                quantity: 1,
                                                 category: items[index].category,
+                                                mainQuantity:
+                                                    items[index].quantity,
                                               ),
                                             );
                                           },

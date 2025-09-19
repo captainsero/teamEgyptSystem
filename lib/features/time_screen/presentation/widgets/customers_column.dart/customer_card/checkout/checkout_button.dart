@@ -132,6 +132,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                               height: ScreenSize.height / 2.2,
                               child: TotalCheckoutColumn(
                                 priceController: priceController,
+                                hoursFee: finalTotal,
                               ),
                             ),
 

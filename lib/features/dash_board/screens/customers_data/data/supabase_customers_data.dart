@@ -96,8 +96,9 @@ class SupabaseCustomersData {
       final updateData = <String, dynamic>{};
       if (name != null) updateData['name'] = name;
       if (collage != null) updateData['collage'] = collage;
-      if (partnershipCode != null)
+      if (partnershipCode != null) {
         updateData['partnership_code'] = partnershipCode;
+      }
       if (totalTime != null) updateData['total_time'] = totalTime;
       if (points != null) updateData['points'] = points;
       if (barcodeUrl != null) updateData['barcode_url'] = barcodeUrl;

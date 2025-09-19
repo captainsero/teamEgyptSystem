@@ -153,8 +153,9 @@ class SupabaseInTeam {
       if (name != null) updateData['name'] = name;
       if (collage != null) updateData['collage'] = collage;
       if (code != null) updateData['code'] = code;
-      if (partnershipCode != null)
+      if (partnershipCode != null) {
         updateData['partnership_code'] = partnershipCode;
+      }
       if (isSub != null) updateData['is_sub'] = isSub;
       if (timer != null) updateData['timer'] = timer.toIso8601String();
 
