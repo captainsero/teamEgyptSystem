@@ -86,6 +86,13 @@ class RoomReservation extends StatelessWidget {
                                 context.read<ReservationCubit>().deleteRev(
                                   ele.number,
                                 );
+
+                                // ModernToast.showToast(
+                                //   context,
+                                //   'Success',
+                                //   "Reservation Deleted Successfully",
+                                //   ToastificationType.success,
+                                // );
                               },
                               icon: Padding(
                                 padding: const EdgeInsets.all(8),

@@ -119,12 +119,8 @@ class _AddReservationState extends State<AddReservation> {
               ToastificationType.success,
             );
 
-            Future.delayed(const Duration(milliseconds: 500), () {
-              context.read<ReservationCubit>().getAllRev();
-              context.read<RoomsCubit>().getRooms();
-
-              _shownSuccess = false;
-            });
+            // context.read<ReservationCubit>().getAllRev();
+            context.read<RoomsCubit>().getRooms();
           } else if (state is ReservationError) {
             ModernToast.showToast(
               context,
@@ -133,12 +129,8 @@ class _AddReservationState extends State<AddReservation> {
               ToastificationType.error,
             );
 
-            Future.delayed(const Duration(milliseconds: 500), () {
-              context.read<ReservationCubit>().getAllRev();
-              context.read<RoomsCubit>().getRooms();
-
-              _shownSuccess = false;
-            });
+            // context.read<ReservationCubit>().getAllRev();
+            // context.read<RoomsCubit>().getRooms();
           }
         },
         builder: (context, state) {

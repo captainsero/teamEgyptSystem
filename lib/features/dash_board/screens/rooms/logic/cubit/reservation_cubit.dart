@@ -38,6 +38,8 @@ class ReservationCubit extends Cubit<ReservationState> {
       );
       // Do NOT call getAllRev() here
     }
+
+    getAllRev();
   }
 
   void deleteRev(String number) async {
@@ -53,5 +55,7 @@ class ReservationCubit extends Cubit<ReservationState> {
       emit(ReservationSuccess(message: "Reservation Deleted Successfully"));
       // Do NOT call getAllRev() here
     }
+
+    getAllRev();
   }
 }

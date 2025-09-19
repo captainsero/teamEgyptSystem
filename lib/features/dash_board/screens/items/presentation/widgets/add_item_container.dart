@@ -30,8 +30,6 @@ class _AddItemContainerState extends State<AddItemContainer> {
 
   final _formKey = GlobalKey<FormState>();
 
-  bool _shownSuccess = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -129,20 +127,15 @@ class _AddItemContainerState extends State<AddItemContainer> {
                 Spacer(),
                 BlocConsumer<ItemsCubit, ItemsState>(
                   listener: (context, state) {
-                    if (state is ItemsSuccessfull && !_shownSuccess) {
-                      _shownSuccess = true;
+                    if (state is ItemsSuccessfull) {
                       ModernToast.showToast(
                         context,
                         'Success',
                         state.message,
                         ToastificationType.success,
                       );
-                      // Remove getAll() from here!
-                      Future.delayed(const Duration(milliseconds: 500), () {
-                        _shownSuccess = false;
-                        // Optionally refresh here if needed:
-                        context.read<ItemsCubit>().getAll();
-                      });
+
+                      context.read<ItemsCubit>().getAll();
                     } else if (state is ItemsError) {
                       ModernToast.showToast(
                         context,
