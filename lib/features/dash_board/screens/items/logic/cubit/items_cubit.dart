@@ -31,7 +31,7 @@ class ItemsCubit extends Cubit<ItemsState> {
     emit(ItemsLoading());
     final items = await SupabaseItems.getByCategory(category);
     emit(ItemsGetByCategory(items: items));
-    }
+  }
 
   void insert(ItemsModel items) async {
     emit(ItemsLoading());
@@ -65,9 +65,9 @@ class ItemsCubit extends Cubit<ItemsState> {
     }
   }
 
-  void updateQuantity(ItemsModel items, int quantity) async {
+  void updateQuantity(String item, int quantity) async {
     emit(ItemsLoading());
-    final update = await SupabaseItems.updateQuantityByName(items, quantity);
+    final update = await SupabaseItems.syncCheckoutToSupabase();
     if (update) {
       getAll();
     }

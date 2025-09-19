@@ -1,4 +1,6 @@
+import 'package:hive/hive.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:team_egypt_v3/core/models/checkout_items.dart';
 import 'package:team_egypt_v3/core/models/items_model.dart';
 
 class SupabaseItems {
@@ -114,17 +116,41 @@ class SupabaseItems {
     }
   }
 
-  static Future<bool> updateQuantityByName(
-    ItemsModel items,
-    int quantity,
-  ) async {
+  static Future<bool> syncCheckoutToSupabase() async {
     try {
-      await _supabase
-          .update({'quantity': items.quantity - quantity})
-          .eq('name', items.name);
+      final checkoutBox = Hive.box<CheckoutItems>('itemsBox');
+
+      // Loop through all checkout items
+      for (final checkoutItem in checkoutBox.values) {
+        final name = checkoutItem.name;
+        final purchasedQty = checkoutItem.quantity;
+
+        // Get current item data from Supabase
+        final existing = await _supabase
+            .select()
+            .eq('name', name)
+            .maybeSingle();
+
+        if (existing == null) {
+          print("Item '$name' not found on Supabase, skipping.");
+          continue;
+        }
+
+        final currentQty = existing['quantity'] as int? ?? 0;
+        final newQty = currentQty - purchasedQty;
+
+        // Update quantity on Supabase
+        await _supabase
+            .update({'quantity': newQty < 0 ? 0 : newQty})
+            .eq('name', name);
+      }
+
+      // ✅ Clear all items from local Hive checkout box
+      await checkoutBox.clear();
+
       return true;
     } catch (e) {
-      print("Error updating item: $e");
+      print('Error syncing checkout to Supabase: $e');
       return false;
     }
   }
