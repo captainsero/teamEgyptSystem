@@ -66,6 +66,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                   title: Row(
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "Price: $baseTotal EGP",

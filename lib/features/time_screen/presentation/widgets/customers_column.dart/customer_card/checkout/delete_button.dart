@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:team_egypt_v3/core/models/checkout_items.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
 
 class DeleteButton extends StatelessWidget {
@@ -13,7 +15,11 @@ class DeleteButton extends StatelessWidget {
       onPressed: () async {
         try {
           await context.read<InTeamCubit>().deleteUser(number);
+
           Navigator.pop(context);
+
+          final checkoutBox = Hive.box<CheckoutItems>('itemsBox');
+          checkoutBox.clear();
         } catch (e) {
           print('Error in delete button: $e');
           ScaffoldMessenger.of(context).showSnackBar(

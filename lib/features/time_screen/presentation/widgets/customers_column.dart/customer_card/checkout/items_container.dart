@@ -137,6 +137,20 @@ class _ItemsContainerState extends State<ItemsContainer> {
                                               'itemsBox',
                                             );
 
+                                            // ✅ Check if an item with the same name already exists
+                                            final alreadyExists = box.values
+                                                .any(
+                                                  (checkout) =>
+                                                      checkout.name ==
+                                                      items[index].name,
+                                                );
+
+                                            if (alreadyExists) {
+                                              // Item is already in the box → do nothing
+                                              return;
+                                            }
+
+                                            // Item is not in the box → add it
                                             await box.add(
                                               CheckoutItems(
                                                 name: items[index].name,
@@ -148,6 +162,7 @@ class _ItemsContainerState extends State<ItemsContainer> {
                                               ),
                                             );
                                           },
+
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Col.dark2,
                                       shape: RoundedRectangleBorder(
