@@ -40,27 +40,15 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
       partnershipCode,
     );
 
-    if (userIndex != -1) {
-      existingUsers[userIndex] = {
-        ...existingUsers[userIndex],
-        if (price != null) 'price': price,
-        if (checkoutTime != null)
-          'checkoutTime': checkoutTime.toIso8601String(),
-        'partnership_code': partnershipName,
-        if (note != null) 'note': note,
-      };
-    } else {
-      existingUsers.add({
-        'name': name,
-        'number': number,
-        'collage': collage,
-        'partnership_code': partnershipName,
-        if (price != null) 'price': price,
-        if (checkoutTime != null)
-          'checkoutTime': checkoutTime.toIso8601String(),
-        if (note != null) 'note': note else 'note': null,
-      });
-    }
+    existingUsers.add({
+      'name': name,
+      'number': number,
+      'collage': collage,
+      'partnership_code': partnershipName,
+      if (price != null) 'price': price,
+      if (checkoutTime != null) 'checkoutTime': checkoutTime.toIso8601String(),
+      if (note != null) 'note': note else 'note': null,
+    });
 
     final total = existingUsers.fold<double>(
       0,

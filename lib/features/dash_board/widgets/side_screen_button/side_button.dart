@@ -25,8 +25,7 @@ class SideButton extends StatelessWidget {
         label,
         style: TextStyle(
           fontSize: 20,
-          fontWeight: FontWeight.bold,
-          fontFamily: Fonts.appBarButtons,
+          fontFamily: Fonts.head,
           color: isChanged ? Col.light1 : Col.light2,
         ),
       ),
