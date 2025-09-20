@@ -19,7 +19,9 @@ class DeleteButton extends StatelessWidget {
           Navigator.pop(context);
 
           final checkoutBox = Hive.box<CheckoutItems>('itemsBox');
+          final noteBox = Hive.box<String>('noteBox');
           checkoutBox.clear();
+          noteBox.delete(number);
         } catch (e) {
           print('Error in delete button: $e');
           ScaffoldMessenger.of(context).showSnackBar(

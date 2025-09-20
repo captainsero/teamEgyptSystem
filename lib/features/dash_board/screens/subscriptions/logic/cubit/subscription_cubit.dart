@@ -4,8 +4,11 @@ import 'package:meta/meta.dart';
 import 'package:team_egypt_v3/core/models/subscription_model.dart';
 import 'package:team_egypt_v3/core/models/subscription_plan_model.dart';
 import 'package:team_egypt_v3/core/models/users_class.dart';
+import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/data/supabase_customers_data.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/days_data/data/supabase_days_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/data/supabase_subscriptions.dart';
+import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
 
 part 'subscription_state.dart';
 
@@ -40,16 +43,16 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
         endDate: DateTime.now().add(Duration(days: plan.days)),
       );
 
-      await SupabaseSubscriptions.updatePlanSub(plan.name);
-
       if (!await SupabaseSubscriptions.insertSubscription(sub)) {
         emit(
           SubscriptionError(
             message: "There is a subscription with the same number",
           ),
         );
+
         getSubscriptions();
       } else {
+        await SupabaseSubscriptions.updatePlanSub(plan.name);
         emit(SubscriptionInsert());
         getSubscriptions();
       }

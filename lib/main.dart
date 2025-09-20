@@ -37,20 +37,21 @@ void main() async {
   }
   Hive.registerAdapter(CheckoutItemsAdapter());
 
-
   // Box itemsBox = await Hive.openBox<CheckoutItems>('itemsBox');
   // Box itemsTotal = await Hive.openBox<double>('itemsTotal');
   // await itemsBox.clear();
   // await itemsBox.close();
   // await itemsTotal.clear();
   // await itemsTotal.close();
-  await Hive.deleteBoxFromDisk('itemsBox');
-  await Hive.deleteBoxFromDisk('itemsTotal');
+  // await Hive.deleteBoxFromDisk('itemsBox');
+  // await Hive.deleteBoxFromDisk('itemsTotal');
 
-  Box itemsBox2 = await Hive.openBox<CheckoutItems>('itemsBox');
-  Box itemsTotal2 = await Hive.openBox<double>('itemsTotal');
-  await itemsTotal2.compact();
-  await itemsBox2.compact();
+  Box itemsBox = await Hive.openBox<CheckoutItems>('itemsBox');
+  Box itemsTotal = await Hive.openBox<double>('itemsTotal');
+  Box noteBox = await Hive.openBox<String>('noteBox');
+  await itemsTotal.compact();
+  await itemsBox.compact();
+  await noteBox.compact();
 
   runApp(const MyApp());
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
 import 'package:team_egypt_v3/core/utils/validators.dart';
@@ -16,7 +17,7 @@ class NoteButton extends StatefulWidget {
     required this.name,
     required this.number,
     required this.collage,
-    required this.parntershipCode
+    required this.parntershipCode,
   });
 
   @override
@@ -24,10 +25,15 @@ class NoteButton extends StatefulWidget {
 }
 
 class _NoteButtonState extends State<NoteButton> {
-  final TextEditingController noteController = TextEditingController();
+  final box = Hive.box<String>('noteBox');
 
   @override
   Widget build(BuildContext context) {
+    final currentNote = box.get(widget.number);
+    final TextEditingController noteController = TextEditingController(
+      text: currentNote,
+    );
+
     return TextButton.icon(
       onPressed: () {
         showDialog(
@@ -42,19 +48,14 @@ class _NoteButtonState extends State<NoteButton> {
             ),
             actions: [
               TextButton(
-                onPressed: () {
+                onPressed: () async {
                   final note = noteController.text.isEmpty
                       ? null
                       : noteController.text;
 
-                  context.read<TimeScreenCubit>().upsertUser(
-                    Validators.choosenDay,
-                    number: widget.number,
-                    name: widget.name,
-                    collage: widget.collage,
-                    note: note,
-                    partnershipCode: widget.parntershipCode
-                  );
+                  if (note != null) {
+                    box.put(widget.number, note);
+                  }
 
                   Navigator.of(context).pop();
                 },

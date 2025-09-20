@@ -71,4 +71,15 @@ class SupabaseDaysData {
       return [];
     }
   }
+
+  static Future<void> updateDayTotal(DateTime date, double newTotal) async {
+    try {
+      // ignore: unused_local_variable
+      final response = await Supabase.instance.client.from('days-data').update({
+        'total': newTotal,
+      }).eq('date', date);
+    } catch (e) {
+      print('error update day total: $e');
+    }
+  }
 }

@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:team_egypt_v3/core/models/reservation_model.dart';
+import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/data/supabase_days_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/data/supabase_partnership.dart';
 import 'package:team_egypt_v3/features/time_screen/data/supabase_in_team.dart';
@@ -19,22 +21,32 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
     emit(GetTotal(total: total));
   }
 
+  Future<double> updateTotal(DateTime date, double price) async {
+    final cerruntTotal = await SupabaseInTeam.getTotal(date);
+    final newTotal = cerruntTotal + price;
+    final updateTotal = await SupabaseDaysData.updateDayTotal(date, newTotal);
+    htotal = newTotal;
+    emit(GetTotal(total: newTotal));
+    return newTotal;
+  }
+
   /// ✅ Upsert User
   void upsertUser(
     DateTime date, {
     required String number,
     required String name,
     required String collage,
-    double? price,
+    required double price,
     DateTime? checkoutTime,
     String? note,
     required String partnershipCode,
   }) async {
     final existingUsers = await SupabaseDaysData.getDayUsers(date);
-
-    final userIndex = existingUsers.indexWhere(
-      (user) => user['number'] == number,
-    );
+    final box = Hive.box<String>('noteBox');
+    final newNote = box.get(number);
+    if (newNote != null) {
+      note = newNote;
+    }
 
     String partnershipName = await SupabasePartnership.getPartnershipName(
       partnershipCode,
@@ -50,15 +62,15 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
       if (note != null) 'note': note else 'note': null,
     });
 
-    final total = existingUsers.fold<double>(
-      0,
-      (sum, user) => sum + (user['price'] ?? 0),
-    );
+    final cerruntTotal = await SupabaseInTeam.getTotal(date);
+    final newTotal = cerruntTotal + price;
 
-    await SupabaseInTeam.updateDaysData(date, total, existingUsers);
+    await SupabaseInTeam.updateDaysData(date, newTotal, existingUsers);
 
-    htotal = total;
-    emit(GetTotal(total: total));
+    box.delete(number);
+
+    htotal = newTotal;
+    emit(GetTotal(total: newTotal));
   }
 
   // ✅ Upsert room reservation

@@ -11,6 +11,9 @@ import 'package:team_egypt_v3/core/widgets/custom_text_field.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/plans_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/subscription_cubit.dart';
 import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
+import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
+import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
+import 'package:team_egypt_v3/features/time_screen/presentation/screen/time_screen.dart';
 import 'package:toastification/toastification.dart';
 
 class AddSubscription extends StatefulWidget {
@@ -33,6 +36,10 @@ class _AddSubscriptionState extends State<AddSubscription> {
         selectedPlan!, // pass the full plan model ✅
       );
       context.read<PlansCubit>().getPlans();
+      context.read<TimeScreenCubit>().updateTotal(
+        Validators.choosenDay,
+        selectedPlan!.price,
+      );
     }
   }
 

@@ -9,7 +9,6 @@ import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/rooms_reservation_card.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/stuff_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/presentation/widget/total_salary_card.dart';
-import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 
 class DaysData extends StatefulWidget {
   const DaysData({super.key});
@@ -31,8 +30,6 @@ class _DaysDataState extends State<DaysData> {
 
   Future<void> _loadData() async {
     context.read<DaysDataCubit>().dayCustomersLoad(selectedDate);
-    context.read<TimeScreenCubit>().getTotal(selectedDate);
-    setState(() {});
   }
 
   Future<void> _pickDate() async {
@@ -57,8 +54,13 @@ class _DaysDataState extends State<DaysData> {
 
     return BlocBuilder<DaysDataCubit, DaysDataState>(
       builder: (context, state) {
-        List<Map<String, dynamic>> nullData = [];
-        final customers = state is DayCustomersLoad ? state.data : nullData;
+        List<Map<String, dynamic>> customers = [];
+        double total = 0.0;
+
+        if (state is DayCustomersLoad) {
+          customers = state.data;
+          total = state.total;
+        }
 
         return SingleChildScrollView(
           child: Column(
@@ -75,15 +77,7 @@ class _DaysDataState extends State<DaysData> {
 
               const SizedBox(height: 10),
 
-              BlocBuilder<TimeScreenCubit, TimeScreenState>(
-                builder: (context, state) {
-                  double total = 0.0;
-                  if (state is GetTotal) {
-                    total = state.total;
-                  }
-                  return TotalSalaryCard(total: total, dateFormat: dateFormat);
-                },
-              ),
+              TotalSalaryCard(total: total, dateFormat: dateFormat),
 
               const SizedBox(height: 10),
 
