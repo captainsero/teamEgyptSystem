@@ -1,0 +1,32 @@
+DashBoard :-
+    1- Days Data:-
+        1. Customers Data => [Name, Number, Collage, Total Time, Partnership Name, Supporting Points]
+        2. Total of the day => EGP
+        3. Rooms Reversations => [Room Name, Time Spent, Salary]
+        
+    2- Partnerships:-
+        1. Add Partnership => [Name, Code, Offer=> [hours, per, drinks]]
+        2. Remove Partnership
+
+    3- Supscribtions:- 
+        1. Add Subscription Plan => [Name, offer]
+        2. Add Supscribtion => [Name, Number, Collage, Supscribtion type]
+        3. Active Subscriptions => [Name, Number, Collage, Subscription Plan]
+        4. Remove Supscribtion
+        5. Expired Subscriptions => [Name, Number, Collage, Subscription Plan]
+    
+    4- Rooms
+        1. Add Room Reversation => [Room name, Rev name, Data, Time(from, to "can be open time")]
+        2. Show Rooms Reversations
+
+    5- Team Items
+
+    6- Stuff
+
+Timer Screen:-
+    1- Active Customers
+        1. Add Customer Show it => [Name, Number,Collage , Timer, Checkout Button]
+        2. Total Salary of the day
+    2- Rooms Reversation (today)
+        1. Show Reversations and notify
+        2. Checkout
