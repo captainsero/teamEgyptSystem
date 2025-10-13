@@ -60,11 +60,15 @@ class _DaysDataState extends State<DaysData> {
     return BlocBuilder<DaysDataCubit, DaysDataState>(
       builder: (context, state) {
         List<Map<String, dynamic>> customers = [];
+        double revenues = 0.0;
+        double expenses = 0.0;
         double total = 0.0;
 
         if (state is DayCustomersLoad) {
           customers = state.data;
-          total = state.total;
+          revenues = state.total;
+          expenses = state.expensesTotal;
+          total = total - expenses;
         }
 
         return SingleChildScrollView(
@@ -82,7 +86,12 @@ class _DaysDataState extends State<DaysData> {
 
               const SizedBox(height: 10),
 
-              TotalSalaryCard(total: total, dateFormat: dateFormat),
+              TotalSalaryCard(
+                total: total,
+                dateFormat: dateFormat,
+                expenses: expenses,
+                revenues: revenues,
+              ),
 
               const SizedBox(height: 10),
 

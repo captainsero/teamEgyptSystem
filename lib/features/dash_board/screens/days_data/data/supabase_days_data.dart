@@ -168,4 +168,16 @@ class SupabaseDaysData {
       return false;
     }
   }
+
+  static Future<double> expensesTotal(DateTime date) async {
+    final expenses = await getExpenses(date);
+    if (expenses.isEmpty) {
+      return 0.0;
+    } else {
+      return expenses.fold<double>(
+        0.0,
+        (double total, ExpensesModel expense) => total + expense.price,
+      );
+    }
+  }
 }

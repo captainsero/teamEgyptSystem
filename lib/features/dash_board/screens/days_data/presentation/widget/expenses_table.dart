@@ -4,7 +4,6 @@ import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/screen_size.dart';
 import 'package:team_egypt_v3/core/models/expenses_model.dart';
 import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
-import 'package:team_egypt_v3/features/dash_board/screens/days_data/data/supabase_days_data.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_data_cubit/days_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_cell.dart';
 import 'package:team_egypt_v3/features/dash_board/widgets/table_header.dart';
@@ -31,29 +30,43 @@ class ExpensesTable extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         child: Align(
-          alignment: Alignment.topLeft,
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Expenses - $dateFormat",
-                  style: TextStyle(
-                    color: Col.light2,
-                    fontWeight: FontWeight.bold,
+          alignment: Alignment.center,
+          child: BlocBuilder<DaysDataCubit, DaysDataState>(
+            builder: (context, state) {
+              double total = 0.0;
+              List<ExpensesModel> expenses = [];
+              if (state is DayCustomersLoad) {
+                total = state.expensesTotal;
+                expenses = state.expenses;
+              }
+              return Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        Text(
+                          "Expenses - $dateFormat",
+                          style: TextStyle(
+                            color: Col.light2,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          "Total - $total",
+                          style: TextStyle(
+                            color: Col.light2,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
 
-              SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-              BlocBuilder<DaysDataCubit, DaysDataState>(
-                builder: (context, state) {
-                  List<ExpensesModel> expenses = [];
-                  if (state is DayCustomersLoad) {
-                    expenses = state.expenses;
-                  }
-                  return Table(
+                  Table(
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                     columnWidths: const {
                       0: FlexColumnWidth(2),
@@ -109,10 +122,10 @@ class ExpensesTable extends StatelessWidget {
                           ],
                         ),
                     ],
-                  );
-                },
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
