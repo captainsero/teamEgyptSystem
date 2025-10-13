@@ -11,6 +11,7 @@ import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/logic/customers_data_cubit/customers_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/logic/days_data_cubit/days_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/items/logic/cubit/items_cubit.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/month_data/logic/cubit/month_data_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/partnerships_screen/logic/cubit/partner_ship_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/reservation_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/rooms_cubit.dart';
@@ -40,7 +41,7 @@ void main() async {
   }
 
   // 🟢 تهيئة Supabase باستخدام القيم من env
-  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey,);
+  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
 
   if (kIsWeb) {
     await Hive.initFlutter(); // للويب
@@ -93,6 +94,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<StuffCubit>(create: (_) => StuffCubit()..getAll()),
         BlocProvider<ItemsCubit>(create: (_) => ItemsCubit()),
+        BlocProvider<MonthDataCubit>(create: (_) => MonthDataCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -12,7 +12,7 @@ class SideButtonContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenSize.width / 5,
-      height: ScreenSize.height / 1.6,
+      height: ScreenSize.height,
       decoration: BoxDecoration(
         color: Col.dark2,
         borderRadius: BorderRadius.circular(20),
@@ -103,6 +103,16 @@ class SideButtonContainer extends StatelessWidget {
               },
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 8,
+            ),
+            const SizedBox(height: 10),
+            SideButton(
+              label: "Monthly Report",
+              icon: Icons.calendar_month,
+              onpressed: () {
+                context.read<CustomersDataCubit>().changePage(9);
+              },
+              isChanged:
+                  context.watch<CustomersDataCubit>().state.selectedPage == 9,
             ),
           ],
         ),

@@ -1,6 +1,6 @@
 class Fonts {
-  static String head = "MozillaHeadline";
-  static String names = "LibertinusSans";
-  static String appBarButtons = "ShadowsIntoLight";
-  static String tableHead = "Arvo";
+  static const String head = "MozillaHeadline";
+  static const String names = "LibertinusSans";
+  static const String appBarButtons = "ShadowsIntoLight";
+  static const String tableHead = "Arvo";
 }
