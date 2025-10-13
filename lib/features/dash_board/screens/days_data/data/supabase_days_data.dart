@@ -140,4 +140,32 @@ class SupabaseDaysData {
       return [];
     }
   }
+
+  static Future<bool> deleteExpenseByName(DateTime date, String name) async {
+    try {
+      final dateOnly = DateTime(date.year, date.month, date.day);
+      final response = await Supabase.instance.client
+          .from("days_data")
+          .select("expenses")
+          .eq("date", dateOnly.toIso8601String())
+          .maybeSingle();
+
+      if (response == null || response['expenses'] == null) return false;
+
+      List<dynamic> currentExpenses = List<dynamic>.from(response['expenses']);
+
+      // Remove all expenses where name matches
+      currentExpenses.removeWhere((expense) => expense['name'] == name);
+
+      await Supabase.instance.client
+          .from('days_data')
+          .update({'expenses': currentExpenses})
+          .eq('date', dateOnly.toIso8601String());
+
+      return true;
+    } catch (e) {
+      print('Error deleting expense: $e');
+      return false;
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:team_egypt_v3/core/models/expenses_model.dart';
 import 'package:team_egypt_v3/core/models/reservation_model.dart';
 import 'package:team_egypt_v3/core/models/stuff_model.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/data/supabase_days_data.dart';
@@ -16,6 +17,7 @@ class DaysDataCubit extends Cubit<DaysDataState> {
       final data = await SupabaseDaysData.getDayUsers(date);
       final reservations = await SupabaseDaysData.getReservations(date);
       final stuff = await SupabaseDaysData.getStuff(date);
+      final expenses = await SupabaseDaysData.getExpenses(date);
       final double total = await SupabaseInTeam.getTotal(date);
 
       if (isClosed) return;
@@ -24,12 +26,22 @@ class DaysDataCubit extends Cubit<DaysDataState> {
           data: data,
           reservations: reservations,
           stuff: stuff,
+          expenses: expenses,
           total: total,
         ),
       );
     } catch (e) {
       if (isClosed) return;
       print("Error cubit load Customers: $e");
+    }
+  }
+
+  Future<bool> deleteExpense(DateTime date, String name) async {
+    final isDeleted = await SupabaseDaysData.deleteExpenseByName(date, name);
+    if (isDeleted) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
