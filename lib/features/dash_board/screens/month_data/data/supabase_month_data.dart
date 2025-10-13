@@ -9,6 +9,7 @@ class SupabaseMonthData {
           .from('days_data')
           .select('expenses, date');
 
+      // ignore: unnecessary_null_comparison
       if (response == null) return 0.0;
 
       double total = 0.0;
@@ -41,6 +42,7 @@ class SupabaseMonthData {
           .from('days_data')
           .select('expenses, date');
 
+      // ignore: unnecessary_null_comparison
       if (response == null) return [];
 
       List<ExpensesModel> monthlyExpenses = [];
@@ -72,6 +74,7 @@ class SupabaseMonthData {
           .from('days_data')
           .select('total, date');
 
+      // ignore: unnecessary_null_comparison
       if (response == null) return 0.0;
 
       double monthlyTotal = 0.0;
@@ -102,6 +105,7 @@ class SupabaseMonthData {
           .from('days_data')
           .select('total, date');
 
+      // ignore: unnecessary_null_comparison
       if (response == null) return [];
 
       List<Map<String, dynamic>> filteredDays = [];
