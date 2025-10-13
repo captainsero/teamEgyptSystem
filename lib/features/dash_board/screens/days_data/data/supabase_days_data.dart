@@ -85,7 +85,7 @@ class SupabaseDaysData {
     }
   }
 
-  static Future<void> insertExpenses(
+  static Future<bool> insertExpenses(
     DateTime date,
     ExpensesModel expense,
   ) async {
@@ -111,8 +111,10 @@ class SupabaseDaysData {
           .from('days_data')
           .update({'expenses': currentExpenses})
           .eq('date', dateOnly.toIso8601String());
+      return true;
     } catch (e) {
       print('Error inserting expense: $e');
+      return false;
     }
   }
 

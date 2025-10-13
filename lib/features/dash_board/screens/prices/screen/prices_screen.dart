@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/add_expenses.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/edit_hour_fee.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/add_room.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/add_position.dart';
@@ -20,7 +21,15 @@ class _PricesScreenState extends State<PricesScreen> {
         children: [
           Row(children: [AddRoom(), Spacer(), AddPosition()]),
           SizedBox(height: 20),
-          Row(children: [AddSubscriptionPlan(), Spacer(), EditHourFee()]),
+          Row(
+            children: [
+              AddSubscriptionPlan(),
+              Spacer(),
+              Column(
+                children: [EditHourFee(), SizedBox(height: 20), AddExpenses()],
+              ),
+            ],
+          ),
         ],
       ),
     );
