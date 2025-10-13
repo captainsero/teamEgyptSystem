@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:team_egypt_v3/core/models/expenses_model.dart';
 import 'package:team_egypt_v3/core/models/reservation_model.dart';
 import 'package:team_egypt_v3/core/models/stuff_model.dart';
 
@@ -75,11 +76,66 @@ class SupabaseDaysData {
   static Future<void> updateDayTotal(DateTime date, double newTotal) async {
     try {
       // ignore: unused_local_variable
-      final response = await Supabase.instance.client.from('days_data').update({
-        'total': newTotal,
-      }).eq('date', date);
+      final response = await Supabase.instance.client
+          .from('days_data')
+          .update({'total': newTotal})
+          .eq('date', date);
     } catch (e) {
       print('error update day total: $e');
+    }
+  }
+
+  static Future<void> insertExpenses(
+    DateTime date,
+    ExpensesModel expense,
+  ) async {
+    try {
+      // Get current expenses list
+      final dateOnly = DateTime(date.year, date.month, date.day);
+      final response = await Supabase.instance.client
+          .from("days_data")
+          .select("expenses")
+          .eq("date", dateOnly.toIso8601String())
+          .maybeSingle();
+
+      List<dynamic> currentExpenses = [];
+      if (response != null && response['expenses'] != null) {
+        currentExpenses = List<dynamic>.from(response['expenses']);
+      }
+
+      // Add new expense
+      currentExpenses.add(expense.toJson());
+
+      // Update the expenses list in database
+      await Supabase.instance.client
+          .from('days_data')
+          .update({'expenses': currentExpenses})
+          .eq('date', dateOnly.toIso8601String());
+    } catch (e) {
+      print('Error inserting expense: $e');
+    }
+  }
+
+  static Future<List<ExpensesModel>> getExpenses(DateTime date) async {
+    try {
+      final dateOnly = DateTime(date.year, date.month, date.day);
+      final response = await Supabase.instance.client
+          .from("days_data")
+          .select("expenses")
+          .eq("date", dateOnly.toIso8601String())
+          .maybeSingle();
+
+      if (response == null || response['expenses'] == null) return [];
+
+      final List<dynamic> expensesData = response['expenses'];
+      return expensesData
+          .map(
+            (json) => ExpensesModel.fromJson(Map<String, dynamic>.from(json)),
+          )
+          .toList();
+    } catch (e) {
+      print('Error getting expenses: $e');
+      return [];
     }
   }
 }
