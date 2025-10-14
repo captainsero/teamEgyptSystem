@@ -40,8 +40,8 @@ void main() async {
     supabaseKey = dotenv.env['SUPABASE_KEY']!;
   }
 
-  // 🟢 تهيئة Supabase باستخدام القيم من env
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+
 
   if (kIsWeb) {
     await Hive.initFlutter(); // للويب

@@ -8,7 +8,9 @@ import 'package:team_egypt_v3/features/splash/presentation/screen/splash_screen.
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
 
-  final TextEditingController emailCtrl = TextEditingController();
+  final TextEditingController emailCtrl = TextEditingController(
+    text: "yomnahagag43@gmail.com",
+  );
   final TextEditingController passwordCtrl = TextEditingController();
 
   @override
