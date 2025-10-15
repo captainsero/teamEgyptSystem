@@ -19,6 +19,7 @@ import 'package:team_egypt_v3/features/dash_board/screens/stuff/logic/cubit/stuf
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/plans_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/subscription_cubit.dart';
 import 'package:team_egypt_v3/features/sign_in/presentation/screen/sign_in_screen.dart';
+import 'package:team_egypt_v3/features/splash/presentation/screen/splash_screen.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
 import 'package:path/path.dart' as p;
@@ -98,7 +99,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SignInScreen(),
+        home: SplashScreen(),
       ),
     );
   }
