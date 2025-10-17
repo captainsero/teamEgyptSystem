@@ -145,7 +145,7 @@ class _MonthlyOverviewState extends State<MonthlyOverview>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _monthName(month) + ' $selectedYear',
+                              '${_monthName(month)} $selectedYear',
                               style: const TextStyle(
                                 fontFamily: Fonts.head,
                                 fontWeight: FontWeight.bold,

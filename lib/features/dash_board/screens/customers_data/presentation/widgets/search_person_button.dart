@@ -101,45 +101,19 @@ class SearchPersonButton extends StatelessWidget {
                       final partnershipCode = partnershipCodeController.text
                           .trim();
 
-                      // Name: only letters + spaces
-                      final nameValid = RegExp(r'^[A-Za-z\s]+$').hasMatch(name);
-
                       // Number: exactly 11 digits
                       final numberValid = RegExp(r'^\d{11}$').hasMatch(number);
-
-                      // Collage: same as name
-                      final collageValid = RegExp(
-                        r'^[A-Za-z0-9\s]+$',
-                      ).hasMatch(collage);
 
                       // Partnership code: 5 letters/numbers only (no shapes)
                       final codeValid = RegExp(
                         r'^[A-Za-z0-9]{5}$',
                       ).hasMatch(partnershipCode);
 
-                      if (!nameValid) {
-                        ModernToast.showToast(
-                          context,
-                          'Warning',
-                          'Name must contain only letters and spaces',
-                          ToastificationType.warning,
-                        );
-                        return;
-                      }
                       if (!numberValid) {
                         ModernToast.showToast(
                           context,
                           'Warning',
                           'Number must be exactly 11 digits',
-                          ToastificationType.warning,
-                        );
-                        return;
-                      }
-                      if (!collageValid) {
-                        ModernToast.showToast(
-                          context,
-                          'Warning',
-                          'Collage must contain only letters and spaces',
                           ToastificationType.warning,
                         );
                         return;

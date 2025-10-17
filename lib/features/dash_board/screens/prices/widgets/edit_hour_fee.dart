@@ -9,16 +9,20 @@ import 'package:team_egypt_v3/core/widgets/icon_and_text.dart';
 import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
 import 'package:toastification/toastification.dart';
 
-class EditHourFee extends StatelessWidget {
+class EditHourFee extends StatefulWidget {
   const EditHourFee({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    TextEditingController priceController = TextEditingController(
-      text: Validators.hourFee.toString(),
-    );
-    final formKey = GlobalKey<FormState>();
+  State<EditHourFee> createState() => _EditHourFeeState();
+}
 
+class _EditHourFeeState extends State<EditHourFee> {
+  TextEditingController priceController = TextEditingController(
+    text: Validators.hourFee.toString(),
+  );
+  final formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: ScreenSize.width / 3.4,
       height: ScreenSize.height / 3.5,

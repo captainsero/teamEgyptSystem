@@ -10,15 +10,19 @@ import 'package:team_egypt_v3/core/widgets/modern_toast.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/days_data/data/supabase_days_data.dart';
 import 'package:toastification/toastification.dart';
 
-class AddExpenses extends StatelessWidget {
+class AddExpenses extends StatefulWidget {
   const AddExpenses({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController priceController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
+  State<AddExpenses> createState() => _AddExpensesState();
+}
 
+class _AddExpensesState extends State<AddExpenses> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: ScreenSize.width / 3.4,
       height: ScreenSize.height / 2.4,

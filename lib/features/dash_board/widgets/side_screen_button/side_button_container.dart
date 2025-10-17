@@ -31,7 +31,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 1,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Days Data",
               icon: Icons.bar_chart_rounded,
@@ -42,7 +42,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 2,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Partnerships",
               icon: Icons.people_alt_sharp,
@@ -53,7 +53,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 3,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Subscriptions",
               icon: Icons.payment,
@@ -63,7 +63,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 4,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Rooms",
               icon: Icons.location_on,
@@ -73,7 +73,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 5,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Stuff",
               icon: Icons.person_add_alt_1,
@@ -84,7 +84,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 6,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Items",
               icon: Icons.inventory,
@@ -94,7 +94,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 7,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Prices",
               icon: Icons.monetization_on,
@@ -104,7 +104,7 @@ class SideButtonContainer extends StatelessWidget {
               isChanged:
                   context.watch<CustomersDataCubit>().state.selectedPage == 8,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SideButton(
               label: "Monthly Report",
               icon: Icons.calendar_month,

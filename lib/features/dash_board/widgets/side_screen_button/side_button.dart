@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/constants/fonts.dart';
+import 'package:team_egypt_v3/core/constants/screen_size.dart';
 
 class SideButton extends StatelessWidget {
   const SideButton({
@@ -24,7 +25,7 @@ class SideButton extends StatelessWidget {
       label: Text(
         label,
         style: TextStyle(
-          fontSize: 20,
+          fontSize: ScreenSize.width / 90,
           fontFamily: Fonts.head,
           color: isChanged ? Col.light1 : Col.light2,
         ),

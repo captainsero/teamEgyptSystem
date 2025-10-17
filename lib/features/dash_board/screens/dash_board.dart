@@ -33,14 +33,11 @@ class _DashBoardState extends State<DashBoard> {
       body: BlocBuilder<CustomersDataCubit, CustomersDataState>(
         builder: (context, state) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: ScreenSize.width / 15),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [SideButtonContainer(), ScreenSwitcher()],
-              ),
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [SideButtonContainer(), ScreenSwitcher()],
             ),
           );
         },
