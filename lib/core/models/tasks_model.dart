@@ -24,7 +24,7 @@ class TasksModel {
     return {
       "name": name,
       "staff_name": staffName,
-      "end_date": endDate,
+      "end_date": endDate.toIso8601String(),
       "done": done,
     };
   }
