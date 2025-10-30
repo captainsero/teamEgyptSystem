@@ -11,6 +11,7 @@ import 'package:team_egypt_v3/features/dash_board/screens/prices/screen/prices_s
 import 'package:team_egypt_v3/features/dash_board/screens/rooms/presentation/screen/rooms.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/stuff/presentation/screen/stuff_screen.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/presentation/screen/subsciptions.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/tasks/presentation/screens/tasks_screen.dart';
 
 class ScreenSwitcher extends StatelessWidget {
   const ScreenSwitcher({super.key});
@@ -50,6 +51,8 @@ class ScreenSwitcher extends StatelessWidget {
                 return PricesScreen();
               case 9:
                 return MonthlyOverview();
+              case 10:
+                return TasksScreen();
               default:
                 return Center(child: Text("Unknown Page"));
             }

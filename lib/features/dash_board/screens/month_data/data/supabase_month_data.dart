@@ -18,13 +18,25 @@ class SupabaseMonthData {
         final date = DateTime.parse(dayData['date']);
         if (date.year == year && date.month == month) {
           final expensesData = dayData['expenses'] as List<dynamic>? ?? [];
-          final expenses = expensesData
-              .map((e) => ExpensesModel.fromJson(Map<String, dynamic>.from(e)))
-              .toList();
 
+          final expenses = expensesData.map((e) {
+            final data = Map<String, dynamic>.from(e);
+
+            // ✅ Safely convert price to double
+            if (data['price'] is int) {
+              data['price'] = (data['price'] as int).toDouble();
+            } else if (data['price'] is String) {
+              data['price'] = double.tryParse(data['price']) ?? 0.0;
+            }
+
+            return ExpensesModel.fromJson(data);
+          }).toList();
+
+          // ✅ Safely sum up the total
           total += expenses.fold<double>(0.0, (sum, exp) => sum + exp.price);
         }
       }
+
       return total;
     } catch (e) {
       print('Error calculating monthly total: $e');
@@ -51,13 +63,24 @@ class SupabaseMonthData {
         final date = DateTime.parse(dayData['date']);
         if (date.year == year && date.month == month) {
           final expensesData = dayData['expenses'] as List<dynamic>? ?? [];
-          final expenses = expensesData
-              .map((e) => ExpensesModel.fromJson(Map<String, dynamic>.from(e)))
-              .toList();
+
+          final expenses = expensesData.map((e) {
+            final data = Map<String, dynamic>.from(e);
+
+            // ✅ Safely convert price to double
+            if (data['price'] is int) {
+              data['price'] = (data['price'] as int).toDouble();
+            } else if (data['price'] is String) {
+              data['price'] = double.tryParse(data['price']) ?? 0.0;
+            }
+
+            return ExpensesModel.fromJson(data);
+          }).toList();
 
           monthlyExpenses.addAll(expenses);
         }
       }
+
       return monthlyExpenses;
     } catch (e) {
       print('Error fetching monthly expenses: $e');

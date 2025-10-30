@@ -68,7 +68,7 @@ class _DaysDataState extends State<DaysData> {
           customers = state.data;
           revenues = state.total;
           expenses = state.expensesTotal;
-          total = total - expenses;
+          total = revenues - expenses;
         }
 
         return SingleChildScrollView(
