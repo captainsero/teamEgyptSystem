@@ -27,8 +27,9 @@ class TasksSupabase {
   static Future<bool> removeTask(String name) async {
     try {
       final response = await supabase.delete().eq('name', name);
-      final deletedCount =
-          (response is List && response.isNotEmpty) ? response.length : 0;
+      final deletedCount = (response is List && response.isNotEmpty)
+          ? response.length
+          : 0;
 
       if (deletedCount == 0) {
         print('No task found with that name');
@@ -46,8 +47,10 @@ class TasksSupabase {
   /// Mark a task as done — returns true if updated successfully
   static Future<bool> markTaskDone(String name, {bool done = true}) async {
     try {
-      final response =
-          await supabase.update({'done': done}).eq('name', name).select();
+      final response = await supabase
+          .update({'done': done})
+          .eq('name', name)
+          .select();
 
       // ignore: unnecessary_null_comparison
       if (response == null || response.isEmpty) {
@@ -60,6 +63,31 @@ class TasksSupabase {
     } catch (e) {
       print('Error marking task as done: $e');
       return false;
+    }
+  }
+
+  /// Fetch all tasks from Supabase
+  static Future<List<TasksModel>> getAllTasks() async {
+    try {
+      final response = await supabase.select();
+
+      // ✅ Ensure we always return a valid list
+      // ignore: unnecessary_null_comparison
+      if (response == null || response.isEmpty) {
+        print('No tasks found');
+        return [];
+      }
+
+      // ✅ Convert JSON list to List<TasksModel>
+      final tasks = (response as List<dynamic>)
+          .map((e) => TasksModel.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
+
+      print('Fetched ${tasks.length} tasks');
+      return tasks;
+    } catch (e) {
+      print('Error fetching tasks: $e');
+      return [];
     }
   }
 }

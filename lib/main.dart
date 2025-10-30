@@ -17,6 +17,7 @@ import 'package:team_egypt_v3/features/dash_board/screens/rooms/logic/cubit/room
 import 'package:team_egypt_v3/features/dash_board/screens/stuff/logic/cubit/stuff_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/plans_cubit.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/subscriptions/logic/cubit/subscription_cubit.dart';
+import 'package:team_egypt_v3/features/dash_board/screens/tasks/logic/cubit/tasks_cubit.dart';
 import 'package:team_egypt_v3/features/splash/presentation/screen/splash_screen.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/in_team_cubit.dart';
 import 'package:team_egypt_v3/features/time_screen/logic/time_screen_cubit/time_screen_cubit.dart';
@@ -93,6 +94,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<StuffCubit>(create: (_) => StuffCubit()..getAll()),
         BlocProvider<ItemsCubit>(create: (_) => ItemsCubit()),
         BlocProvider<MonthDataCubit>(create: (_) => MonthDataCubit()),
+        BlocProvider<TasksCubit>(create: (_) => TasksCubit()..getTasks()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
