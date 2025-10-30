@@ -27,14 +27,21 @@ class TasksContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IconAndText(text: "Our Stuff", icon: Icons.group_sharp),
+          IconAndText(text: "Tasks", icon: Icons.book),
           const SizedBox(height: 20),
           BlocBuilder<TasksCubit, TasksState>(
             builder: (context, state) {
               List<TasksModel> tasks = [];
               if (state is GetTasks) {
-                tasks = state.tasks;
+                tasks = List.from(state.tasks);
+
+                // 🔹 Sort tasks by date (earliest first)
+                tasks.sort((a, b) => b.endDate.compareTo(a.endDate));
+
+                // 🔸 If you prefer newest first, reverse it:
+                // tasks.sort((a, b) => b.endDate.compareTo(a.endDate));
               }
+
               return Table(
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 columnWidths: const {
@@ -58,29 +65,28 @@ class TasksContainer extends StatelessWidget {
                         TableCell1(ele.name),
                         TableCell1(ele.staffName),
                         TableCell1(StringExtensions.formatDate(ele.endDate)),
-
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconButton(
                               onPressed: () async {
-                                final delete = await context
+                                final toggled = await context
                                     .read<TasksCubit>()
                                     .markTask(ele.name);
 
-                                if (delete) {
+                                if (toggled) {
                                   ModernToast.showToast(
                                     context,
                                     'Success',
-                                    'Task Marked Successfully',
+                                    'Task status toggled successfully',
                                     ToastificationType.success,
                                   );
                                 } else {
                                   ModernToast.showToast(
                                     context,
                                     'Error',
-                                    'Cannot Mare the Task, try again later',
+                                    'Could not toggle task, try again later',
                                     ToastificationType.error,
                                   );
                                 }
@@ -88,8 +94,11 @@ class TasksContainer extends StatelessWidget {
                               icon: Padding(
                                 padding: const EdgeInsets.all(8),
                                 child: ele.done
-                                    ? Icon(Icons.done_all, color: Colors.green)
-                                    : Icon(
+                                    ? const Icon(
+                                        Icons.done_all,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(
                                         Icons.download_done_sharp,
                                         color: Colors.black,
                                       ),
@@ -97,32 +106,29 @@ class TasksContainer extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () async {
-                                final delete = await context
+                                final deleted = await context
                                     .read<TasksCubit>()
                                     .removeTask(ele.name);
 
-                                if (delete) {
+                                if (deleted) {
                                   ModernToast.showToast(
                                     context,
                                     'Success',
-                                    'Task Deleted successfully',
+                                    'Task deleted successfully',
                                     ToastificationType.success,
                                   );
                                 } else {
                                   ModernToast.showToast(
                                     context,
                                     'Error',
-                                    'Cannot delete the Task, try again',
+                                    'Cannot delete the task, try again',
                                     ToastificationType.error,
                                   );
                                 }
                               },
-                              icon: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
+                              icon: const Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Icon(Icons.delete, color: Colors.red),
                               ),
                             ),
                           ],

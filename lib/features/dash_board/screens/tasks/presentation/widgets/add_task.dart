@@ -56,7 +56,7 @@ class _AddTaskState extends State<AddTask> {
       key: _formKey,
       child: Container(
         width: ScreenSize.width / 2.6,
-        height: ScreenSize.height / 1.8,
+        // height: ScreenSize.height / 1.8,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Col.dark2,
@@ -64,7 +64,7 @@ class _AddTaskState extends State<AddTask> {
         ),
         child: BlocBuilder<TasksCubit, TasksState>(
           builder: (context, state) {
-            void addSubscriptionPlan() async {
+            void addTask() async {
               if (_formKey.currentState!.validate()) {
                 final task = TasksModel(
                   name: nameController.text,
@@ -83,6 +83,7 @@ class _AddTaskState extends State<AddTask> {
                   );
                   nameController.clear();
                   staffController.clear();
+                  dateFormat = '';
                 } else {
                   ModernToast.showToast(
                     context,
@@ -107,7 +108,7 @@ class _AddTaskState extends State<AddTask> {
                       IconAndText(text: "Add New Task", icon: Icons.task_alt),
                       const Spacer(),
                       TextButton.icon(
-                        onPressed: addSubscriptionPlan,
+                        onPressed: addTask,
                         icon: Icon(Icons.add_circle, color: Col.light2),
                         label: Text(
                           "Add",
@@ -133,7 +134,8 @@ class _AddTaskState extends State<AddTask> {
                       },
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(height: 20),
+                  // const Spacer(),
                   SizedBox(
                     width: ScreenSize.width / 5.5,
                     child: CustomTextField(
@@ -147,7 +149,8 @@ class _AddTaskState extends State<AddTask> {
                       },
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(height: 20),
+                  // const Spacer(),
                   Row(
                     children: [
                       DatePickerButton(onPick: _pickDate),
@@ -163,7 +166,8 @@ class _AddTaskState extends State<AddTask> {
                     ],
                   ),
 
-                  const Spacer(),
+                  const SizedBox(height: 20),
+                  // const Spacer(),
                 ],
               );
             }
