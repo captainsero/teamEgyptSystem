@@ -26,15 +26,8 @@ class TasksSupabase {
   /// Remove a task by name — returns true if removed successfully
   static Future<bool> removeTask(String name) async {
     try {
+      // ignore: unused_local_variable
       final response = await supabase.delete().eq('name', name);
-      final deletedCount = (response is List && response.isNotEmpty)
-          ? response.length
-          : 0;
-
-      if (deletedCount == 0) {
-        print('No task found with that name');
-        return false;
-      }
 
       print('Task removed successfully');
       return true;
@@ -45,23 +38,30 @@ class TasksSupabase {
   }
 
   /// Mark a task as done — returns true if updated successfully
-  static Future<bool> markTaskDone(String name, {bool done = true}) async {
+  static Future<bool> toggleTaskDone(String name) async {
     try {
+      // 1. Fetch the current task
       final response = await supabase
-          .update({'done': done})
+          .select('done')
           .eq('name', name)
-          .select();
+          .maybeSingle();
 
-      // ignore: unnecessary_null_comparison
-      if (response == null || response.isEmpty) {
+      if (response == null) {
         print('Task not found');
         return false;
       }
 
-      print('Task marked as done');
+      // 2. Get the current value and toggle it
+      final currentDone = response['done'] as bool;
+      final newDone = !currentDone;
+
+      // 3. Update in Supabase
+      await supabase.update({'done': newDone}).eq('name', name);
+
+      print('Task "$name" marked as ${newDone ? 'done' : 'not done'}');
       return true;
     } catch (e) {
-      print('Error marking task as done: $e');
+      print('Error toggling task status: $e');
       return false;
     }
   }

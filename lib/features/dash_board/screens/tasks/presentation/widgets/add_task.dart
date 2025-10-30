@@ -129,9 +129,6 @@ class _AddTaskState extends State<AddTask> {
                         if (value == null || value.isEmpty) {
                           return "Name cannot be empty";
                         }
-                        if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
-                          return "Name must contain only letters and numbers";
-                        }
                         return null;
                       },
                     ),

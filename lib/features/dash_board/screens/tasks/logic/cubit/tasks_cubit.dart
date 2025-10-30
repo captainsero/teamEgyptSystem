@@ -37,7 +37,7 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   Future<bool> markTask(String name) async {
-    final isMarked = await TasksSupabase.markTaskDone(name);
+    final isMarked = await TasksSupabase.toggleTaskDone(name);
     if (isMarked) {
       getTasks();
       return true;
