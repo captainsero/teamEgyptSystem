@@ -87,7 +87,7 @@ class RoomReservation extends StatelessWidget {
                               onPressed: () async {
                                 final delete = await context
                                     .read<ReservationCubit>()
-                                    .deleteRev(ele.number);
+                                    .deleteRev(ele.id!);
 
                                 if (delete) {
                                   ModernToast.showToast(

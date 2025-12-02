@@ -39,9 +39,9 @@ class ReservationCubit extends Cubit<ReservationState> {
     }
   }
 
-  Future<bool> deleteRev(String number) async {
+  Future<bool> deleteRev(int id) async {
     emit(DeleteReservationLoading());
-    final del = await SupabaseReservations.deleteRev(number);
+    final del = await SupabaseReservations.deleteRev(id);
 
     if (del == false) {
       getAllRev();

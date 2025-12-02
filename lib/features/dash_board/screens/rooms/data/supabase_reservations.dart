@@ -8,12 +8,6 @@ class SupabaseReservations {
   // Insert Reservation
   static Future<bool> insertRev(ReservationModel rev) async {
     try {
-      // 1. Unique number check
-      final existingNum = await supabase
-          .from('room_reservation')
-          .select()
-          .eq('number', rev.number);
-      if (existingNum.isNotEmpty) return false;
 
       // 2. Conflict check
       final formattedDate = rev.date.toIso8601String().split('T').first;
@@ -92,12 +86,12 @@ class SupabaseReservations {
   }
 
   // Delete reservation by ID
-  static Future<bool> deleteRev(String number) async {
+  static Future<bool> deleteRev(int id) async {
     try {
       final response = await supabase
           .from("room_reservation")
           .delete()
-          .eq('number', number)
+          .eq('id', id)
           .select(); // 👈 important: returns the deleted rows
 
       // ignore: unnecessary_null_comparison

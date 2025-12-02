@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReservationModel {
+  final int? id;
   final String name;
   final String number;
   final String room;
@@ -10,6 +11,7 @@ class ReservationModel {
   final TimeOfDay to;
 
   ReservationModel({
+    this.id,
     required this.name,
     required this.number,
     required this.room,
@@ -24,6 +26,7 @@ class ReservationModel {
     final toParts = (json['to'] as String).split(':');
 
     return ReservationModel(
+      id: json['id'],
       name: json['name'] as String,
       number: json['number'] as String,
       room: json['room'] as String,

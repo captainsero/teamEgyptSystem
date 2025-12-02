@@ -28,7 +28,7 @@ class _ReservationCheckoutState extends State<ReservationCheckout> {
     ScreenSize.intial(context);
     return TextButton.icon(
       onPressed: () async {
-        await Hive.openBox<CheckoutItems>(widget.res.number);
+        await Hive.openBox<CheckoutItems>(widget.res.id!.toString());
         showDialog(
           context: context,
           builder: (_) {
@@ -96,7 +96,7 @@ class _ReservationCheckoutState extends State<ReservationCheckout> {
                               child: TotalCheckoutColumn(
                                 priceController: priceController,
                                 hoursFee: widget.res.price,
-                                number: widget.res.number,
+                                number: widget.res.id!.toString(),
                               ),
                             ),
 
@@ -110,7 +110,7 @@ class _ReservationCheckoutState extends State<ReservationCheckout> {
 
                             Spacer(),
 
-                            ItemsContainer(user: widget.res.number),
+                            ItemsContainer(user: widget.res.id!.toString()),
                             Spacer(),
                           ],
                         ),
