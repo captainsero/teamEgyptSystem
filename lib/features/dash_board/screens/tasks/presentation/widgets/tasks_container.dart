@@ -24,122 +24,97 @@ class TasksContainer extends StatelessWidget {
         color: Col.dark2,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconAndText(text: "Tasks", icon: Icons.book),
-          const SizedBox(height: 20),
-          BlocBuilder<TasksCubit, TasksState>(
-            builder: (context, state) {
-              List<TasksModel> tasks = [];
-              if (state is GetTasks) {
-                tasks = List.from(state.tasks);
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconAndText(text: "Tasks", icon: Icons.book),
+            const SizedBox(height: 20),
+            BlocBuilder<TasksCubit, TasksState>(
+              builder: (context, state) {
+                List<TasksModel> tasks = [];
+                if (state is GetTasks) {
+                  tasks = List.from(state.tasks);
 
-                // 🔹 Sort tasks by date (earliest first)
-                tasks.sort((a, b) => b.endDate.compareTo(a.endDate));
+                  // 🔹 Sort tasks by date (earliest first)
+                  tasks.sort((a, b) => b.endDate.compareTo(a.endDate));
 
-                // 🔸 If you prefer newest first, reverse it:
-                // tasks.sort((a, b) => b.endDate.compareTo(a.endDate));
-              }
+                  // 🔸 If you prefer newest first, reverse it:
+                  // tasks.sort((a, b) => b.endDate.compareTo(a.endDate));
+                }
 
-              return Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                columnWidths: const {
-                  0: FlexColumnWidth(2),
-                  1: FlexColumnWidth(2),
-                  2: FlexColumnWidth(2),
-                  3: FlexColumnWidth(1.5),
-                },
-                children: [
-                  TableRow(
-                    children: [
-                      TableHeader("Name"),
-                      TableHeader("Staff Name"),
-                      TableHeader("End Date"),
-                      Center(child: TableHeader("Actions")),
-                    ],
-                  ),
-                  for (var ele in tasks)
+                return Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  columnWidths: const {
+                    0: FlexColumnWidth(2),
+                    1: FlexColumnWidth(2),
+                    2: FlexColumnWidth(2),
+                    3: FlexColumnWidth(1.5),
+                  },
+                  children: [
                     TableRow(
                       children: [
-                        TableCell1(ele.name),
-                        TableCell1(ele.staffName),
-                        TableCell1(StringExtensions.formatDate(ele.endDate)),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () async {
-                                final toggled = await context
-                                    .read<TasksCubit>()
-                                    .markTask(ele.name);
-
-                                if (toggled) {
-                                  ModernToast.showToast(
-                                    context,
-                                    'Success',
-                                    'Task status toggled successfully',
-                                    ToastificationType.success,
-                                  );
-                                } else {
-                                  ModernToast.showToast(
-                                    context,
-                                    'Error',
-                                    'Could not toggle task, try again later',
-                                    ToastificationType.error,
-                                  );
-                                }
-                              },
-                              icon: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: ele.done
-                                    ? const Icon(
-                                        Icons.done_all,
-                                        color: Colors.green,
-                                      )
-                                    : const Icon(
-                                        Icons.download_done_sharp,
-                                        color: Colors.black,
-                                      ),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                                final deleted = await context
-                                    .read<TasksCubit>()
-                                    .removeTask(ele.name);
-
-                                if (deleted) {
-                                  ModernToast.showToast(
-                                    context,
-                                    'Success',
-                                    'Task deleted successfully',
-                                    ToastificationType.success,
-                                  );
-                                } else {
-                                  ModernToast.showToast(
-                                    context,
-                                    'Error',
-                                    'Cannot delete the task, try again',
-                                    ToastificationType.error,
-                                  );
-                                }
-                              },
-                              icon: const Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Icon(Icons.delete, color: Colors.red),
-                              ),
-                            ),
-                          ],
-                        ),
+                        TableHeader("Name"),
+                        TableHeader("Staff Name"),
+                        TableHeader("End Date"),
+                        Center(child: TableHeader("Actions")),
                       ],
                     ),
-                ],
-              );
-            },
-          ),
-        ],
+                    for (var ele in tasks)
+                      TableRow(
+                        children: [
+                          TableCell1(ele.name),
+                          TableCell1(ele.staffName),
+                          TableCell1(StringExtensions.formatDate(ele.endDate)),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () async {
+                                  final toggled = await context
+                                      .read<TasksCubit>()
+                                      .markTask(ele.name);
+
+                                  if (toggled) {
+                                    ModernToast.showToast(
+                                      context,
+                                      'Success',
+                                      'Task status toggled successfully',
+                                      ToastificationType.success,
+                                    );
+                                  } else {
+                                    ModernToast.showToast(
+                                      context,
+                                      'Error',
+                                      'Could not toggle task, try again later',
+                                      ToastificationType.error,
+                                    );
+                                  }
+                                },
+                                icon: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: ele.done
+                                      ? const Icon(
+                                          Icons.done_all,
+                                          color: Colors.green,
+                                        )
+                                      : const Icon(
+                                          Icons.download_done_sharp,
+                                          color: Colors.black,
+                                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
