@@ -7,6 +7,7 @@ class TotalSalaryCard extends StatelessWidget {
   final double total;
   final double expenses;
   final double revenues;
+  final double itemsTotal;
   final String dateFormat;
 
   const TotalSalaryCard({
@@ -14,6 +15,7 @@ class TotalSalaryCard extends StatelessWidget {
     required this.total,
     required this.dateFormat,
     required this.expenses,
+    required this.itemsTotal,
     required this.revenues,
   });
 
@@ -45,14 +47,29 @@ class TotalSalaryCard extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Text(
-            "Revenues: $revenues EGP",
-            style: TextStyle(
-              color: Col.light1,
-              fontSize: 25,
-              fontFamily: Fonts.tableHead,
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            children: [
+              Text(
+                "Revenues: $revenues EGP",
+                style: TextStyle(
+                  color: Col.light1,
+                  fontSize: 25,
+                  fontFamily: Fonts.tableHead,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Spacer(),
+              Text(
+                "Items Revenues: $itemsTotal EGP",
+                style: TextStyle(
+                  color: Col.light1,
+                  fontSize: 25,
+                  fontFamily: Fonts.tableHead,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Spacer(),
+            ],
           ),
           const Spacer(),
           Text(

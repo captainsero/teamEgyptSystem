@@ -63,11 +63,13 @@ class _DaysDataState extends State<DaysData> {
         double revenues = 0.0;
         double expenses = 0.0;
         double total = 0.0;
+        double itemsTotal = 0.0;
 
         if (state is DayCustomersLoad) {
           customers = state.data;
           revenues = state.total;
           expenses = state.expensesTotal;
+          itemsTotal = state.itemsTotal;
           total = revenues - expenses;
         }
 
@@ -91,6 +93,7 @@ class _DaysDataState extends State<DaysData> {
                 dateFormat: dateFormat,
                 expenses: expenses,
                 revenues: revenues,
+                itemsTotal: itemsTotal,
               ),
 
               const SizedBox(height: 10),

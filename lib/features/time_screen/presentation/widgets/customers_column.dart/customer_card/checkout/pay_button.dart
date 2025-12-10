@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:team_egypt_v3/core/constants/color.dart';
 import 'package:team_egypt_v3/core/models/in_team_users.dart';
 import 'package:team_egypt_v3/core/utils/validators.dart';
@@ -26,6 +27,9 @@ class PayButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
+        final totalBox = Hive.box<double>("itemsTotal");
+        final itemsTotal = totalBox.get('${user.number}total');
+
         final text = priceController.text.trim();
 
         if (text.isEmpty) {
@@ -60,6 +64,7 @@ class PayButton extends StatelessWidget {
           name: user.name,
           collage: user.collage,
           price: confirmedPrice,
+          itemsTotal: itemsTotal,
           checkoutTime: now,
           partnershipCode: isSub ? "Subscriped" : user.partnershipCode,
           time: time,

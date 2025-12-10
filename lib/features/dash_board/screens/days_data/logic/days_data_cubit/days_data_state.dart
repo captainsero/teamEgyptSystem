@@ -14,6 +14,7 @@ class DayCustomersLoad extends DaysDataState {
   final List<ExpensesModel> expenses;
   final double total;
   final double expensesTotal;
+  final double itemsTotal;
 
   DayCustomersLoad({
     required this.data,
@@ -22,5 +23,6 @@ class DayCustomersLoad extends DaysDataState {
     required this.expenses,
     required this.total,
     required this.expensesTotal,
+    required this.itemsTotal,
   });
 }

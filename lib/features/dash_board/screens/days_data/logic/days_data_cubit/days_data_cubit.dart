@@ -20,6 +20,7 @@ class DaysDataCubit extends Cubit<DaysDataState> {
       final expenses = await SupabaseDaysData.getExpenses(date);
       final double total = await SupabaseInTeam.getTotal(date);
       final double expensesTotal = await SupabaseDaysData.expensesTotal(date);
+      final double itemsTotal = await SupabaseDaysData.getItemsTotal();
 
       if (isClosed) return;
       emit(
@@ -30,6 +31,7 @@ class DaysDataCubit extends Cubit<DaysDataState> {
           expenses: expenses,
           total: total,
           expensesTotal: expensesTotal,
+          itemsTotal: itemsTotal
         ),
       );
     } catch (e) {

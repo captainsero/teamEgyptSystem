@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_egypt_v3/core/models/users_class.dart';
+import 'package:team_egypt_v3/core/utils/validators.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/customers_data/data/supabase_customers_data.dart';
 import 'package:team_egypt_v3/core/models/in_team_users.dart';
 
@@ -168,6 +169,28 @@ class SupabaseInTeam {
     } catch (e) {
       print("Error updating in_team user: $e");
       return false;
+    }
+  }
+
+  static Future<void> addToItemsTotal(double addValue) async {
+    try {
+      final client = Supabase.instance.client;
+
+      final selectRes = await client
+          .from('days_data')
+          .select('items_total')
+          .eq('date', Validators.choosenDay)
+          .maybeSingle();
+
+      final current = (selectRes?['items_total'] ?? 0) as num;
+      final newTotal = current + addValue;
+
+      await client
+          .from('days_data')
+          .update({'items_total': newTotal})
+          .eq('date', Validators.choosenDay);
+    } catch (e) {
+      print("Error adding items total: $e");
     }
   }
 }

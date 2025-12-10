@@ -38,6 +38,7 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
     required String collage,
     required String time,
     required double price,
+    double? itemsTotal,
     DateTime? checkoutTime,
     String? note,
     required String partnershipCode,
@@ -64,6 +65,10 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
       if (note != null) 'note': note else 'note': null,
     });
 
+    if (itemsTotal != null) {
+      final _ = await SupabaseInTeam.addToItemsTotal(itemsTotal);
+    }
+
     final cerruntTotal = await SupabaseInTeam.getTotal(date);
     final newTotal = cerruntTotal + price;
 
@@ -77,12 +82,17 @@ class TimeScreenCubit extends Cubit<TimeScreenState> {
   }
 
   // ✅ Upsert room reservation
-  Future<void> upsertRoom(DateTime date, ReservationModel reservation) async {
+  Future<void> upsertRoom(
+    DateTime date,
+    ReservationModel reservation,
+    double itemsTotal,
+  ) async {
     final total = await SupabaseInTeam.getTotal(date);
     final newTotal = total + reservation.price;
 
     // 3. Save reservation with updated total
     await SupabaseRoomsData.saveReservation(date, newTotal, reservation);
+    final _ = await SupabaseInTeam.addToItemsTotal(itemsTotal);
 
     // 4. Update local state
     emit(GetTotal(total: newTotal));
