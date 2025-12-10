@@ -203,4 +203,22 @@ class SupabaseDaysData {
       return 0.0;
     }
   }
+
+  static Future<void> setDayTotal(double newTotal) async {
+    try {
+      final client = Supabase.instance.client;
+
+      await client
+          .from('days_data')
+          .update({
+            'total': newTotal, // overwrite with the new value
+          })
+          .eq(
+            'date',
+            Validators.choosenDay,
+          ); // make sure you target the correct row[web:49]
+    } catch (e) {
+      print("Error setting total: $e");
+    }
+  }
 }
