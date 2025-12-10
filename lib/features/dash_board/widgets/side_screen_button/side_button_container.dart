@@ -105,15 +105,16 @@ class SideButtonContainer extends StatelessWidget {
                   context.watch<CustomersDataCubit>().state.selectedPage == 8,
             ),
             const SizedBox(height: 5),
-            // SideButton(
-            //   label: "Monthly Report",
-            //   icon: Icons.calendar_month,
-            //   onpressed: () {
-            //     context.read<CustomersDataCubit>().changePage(9);
-            //   },
-            //   isChanged:
-            //       context.watch<CustomersDataCubit>().state.selectedPage == 9,
-            // ),
+            //! Just to owner
+            SideButton(
+              label: "Monthly Report",
+              icon: Icons.calendar_month,
+              onpressed: () {
+                context.read<CustomersDataCubit>().changePage(9);
+              },
+              isChanged:
+                  context.watch<CustomersDataCubit>().state.selectedPage == 9,
+            ),
             SideButton(
               label: "Tasks",
               icon: Icons.task_rounded,
