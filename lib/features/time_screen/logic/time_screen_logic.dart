@@ -94,7 +94,7 @@ class TimeScreenLogic {
             cursorColor: Colors.white70,
             controller: numberController,
             autofocus: true,
-            onSubmitted: (_) => tryInsertUser(context, numberController),
+            onSubmitted: (_) => tryInsertUser(context, numberController, true),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -139,7 +139,7 @@ class TimeScreenLogic {
             ),
           ),
           ElevatedButton(
-            onPressed: () => tryInsertUser(context, numberController),
+            onPressed: () => tryInsertUser(context, numberController, true),
             style: ElevatedButton.styleFrom(
               backgroundColor: Col.light2,
               shape: RoundedRectangleBorder(
@@ -157,6 +157,7 @@ class TimeScreenLogic {
   static Future<void> tryInsertUser(
     BuildContext context,
     TextEditingController numberController,
+    bool isDialog,
   ) async {
     final number = numberController.text.trim();
 
@@ -175,7 +176,9 @@ class TimeScreenLogic {
     final sub = await SupabaseSubscriptions.getSubscriptionByNumber(number);
 
     if (sub != null) {
-      Navigator.of(context).pop();
+      if (isDialog) {
+        Navigator.of(context).pop();
+      }
       final planMin = sub.planHours * 60;
 
       if (sub.endDate.isBefore(DateTime.now())) {
@@ -199,7 +202,9 @@ class TimeScreenLogic {
         BlocProvider.of<InTeamCubit>(context).loadUsers();
         numberController.clear();
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pop();
+          if (isDialog) {
+            Navigator.of(context).pop();
+          }
         });
         ModernToast.showToast(
           context,
