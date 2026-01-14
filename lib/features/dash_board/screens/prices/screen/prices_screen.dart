@@ -4,7 +4,6 @@ import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/edit_ho
 import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/add_room.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/add_position.dart';
 import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/add_subscription_plan.dart';
-import 'package:team_egypt_v3/features/dash_board/screens/prices/widgets/edit_total.dart';
 
 class PricesScreen extends StatelessWidget {
   const PricesScreen({super.key});
@@ -33,7 +32,7 @@ class PricesScreen extends StatelessWidget {
                           AddExpenses(),
                           SizedBox(height: 20),
                           //! Just The owner
-                          EditTotal(),
+                          // EditTotal(),
                           SizedBox(height: 20),
                         ],
                       ),

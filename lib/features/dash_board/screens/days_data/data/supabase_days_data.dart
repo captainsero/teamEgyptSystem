@@ -182,14 +182,14 @@ class SupabaseDaysData {
     }
   }
 
-  static Future<double> getItemsTotal() async {
+  static Future<double> getItemsTotal(DateTime date) async {
     try {
       final client = Supabase.instance.client;
 
       final data = await client
           .from('days_data')
           .select('items_total')
-          .eq('date', Validators.choosenDay)
+          .eq('date', date)
           .maybeSingle(); // returns null if no row[web:49]
 
       if (data == null || data['items_total'] == null) {
